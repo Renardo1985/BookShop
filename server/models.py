@@ -8,7 +8,7 @@ class User(db.Model, SerializerMixin):
     __tablename__ = 'users'
     
     id = db.Column(db.Integer, primary_key=True)
-    _password_hash= db.Column(db.String())
+    _password_hash= db.Column(db.String)
     email = db.Column(db.String(100), unique=True, nullable=False)
     full_name = db.Column(db.String(100), nullable=False)
     
@@ -37,19 +37,19 @@ class Address(db.Model):
     state = db.Column(db.String(50), nullable=False)
     postal_code = db.Column(db.String(20), nullable=False)
     country = db.Column(db.String(100), nullable=False)
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
     
 class Book(db.Model):
     __tablename__ = 'books'
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(100), nullable=False)
-    isbn_13 = db.Column(db.String(),unique=True)
+    isbn_13 = db.Column(db.String,unique=True)
     author = db.Column(db.String(100))
-    price = db.Column(db.Float, nullable=False)
+    price = db.Column(db.Float)
     image = db.Column(db.String(100))
     publisher = db.Column(db.String(100))
-    description = db.Column(db.String())
-    category = db.Column(db.String())
+    description = db.Column(db.String)
+    category = db.Column(db.String)
     
     # Define relationships to other models
     cart_items = db.relationship('Cart', backref='book', lazy=True)
@@ -57,5 +57,5 @@ class Book(db.Model):
 class Cart(db.Model):
     __tablename__ = 'cart'
     id = db.Column(db.Integer, primary_key=True)
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
-    book_id = db.Column(db.Integer, db.ForeignKey('book.id'), nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
+    book_id = db.Column(db.Integer, db.ForeignKey('books.id'))
