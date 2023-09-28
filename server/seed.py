@@ -8,10 +8,88 @@ from faker import Faker
 
 # Local imports
 from app import app
-from models import db
+from models import db, User, Book, Address, Cart
 
 if __name__ == '__main__':
     fake = Faker()
     with app.app_context():
+        
+        print("Deleting all records...")
+        Book.query.delete()
+        User.query.delete()
+        Address.query.delete()
+        Cart.query.delete()
+        
         print("Starting seed...")
-        # Seed code goes here!
+        
+        print("Creating users...")
+
+        users = []
+        emails = []
+
+        for i in range(20):
+            email = fake.email()
+            while email in emails:
+                email = fake.email()
+            emails.append(email)
+
+            user = User(
+                email=email,
+                full_name= fake.name()
+            )
+
+            user.password_hash = user.full_name + 'pass'
+            users.append(user)
+
+        db.session.add_all(users)
+        
+        print("Creating Books...")
+        
+        books = []
+        isbns = []
+        
+        for i in range(50):
+            isbn = fake.isbn13()
+            while isbn in isbns:
+                isbn = fake.isbn13()
+            isbns.append(isbn)
+            
+            price = fake.pyfloat(min_value=5, max_value=300)
+            
+            book = Book(
+                title= fake.sentence(nb_words = 4),
+                isbn_13= isbn,
+                author= fake.name(),
+                price= "%.2f" % price,
+                image= fake.url(),
+                publisher= fake.company(),
+                description=fake.paragraph(nb_sentences=8),
+                category= "N/A",
+            )
+            books.append(book)
+
+        db.session.add_all(books)
+        
+        print("Generating Addresses...")
+        
+        addresses = []
+        for i in range(20):  
+            
+            address = Address(
+                street = fake.street_address(),
+                city = fake.city(),
+                state = fake.state(),
+                postal_code = fake.postcode(),
+                country = fake.current_country(),
+            )
+            
+            address.user = rc(users)
+            
+            addresses.append(address)
+        
+        db.session.add_all(addresses)
+        
+        
+        
+        db.session.commit()
+

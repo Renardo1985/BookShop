@@ -59,3 +59,5 @@ class Cart(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
     book_id = db.Column(db.Integer, db.ForeignKey('books.id'))
+    quantity = db.Column(db.Integer, default=1)  # Default to 1 book
+    added_date = db.Column(db.DateTime, server_default=db.func.now())
