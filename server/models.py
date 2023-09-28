@@ -7,6 +7,8 @@ from config import db, bcrypt
 class User(db.Model, SerializerMixin):
     __tablename__ = 'users'
     
+    serialize_rules = ('-addresses.user', '-_password_hash',)
+    
     id = db.Column(db.Integer, primary_key=True)
     _password_hash= db.Column(db.String)
     email = db.Column(db.String(100), unique=True, nullable=False)
@@ -39,7 +41,7 @@ class Address(db.Model):
     country = db.Column(db.String(100), nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
     
-class Book(db.Model):
+class Book(db.Model, SerializerMixin):
     __tablename__ = 'books'
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(100), nullable=False)
