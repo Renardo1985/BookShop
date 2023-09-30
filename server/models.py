@@ -7,7 +7,7 @@ from config import db, bcrypt
 class User(db.Model, SerializerMixin):
     __tablename__ = 'users'
     
-    serialize_rules = ('-addresses.user', '-_password_hash',)
+    serialize_rules = ('-addresses.user', '-_password_hash','-cart_items.user')
     
     id = db.Column(db.Integer, primary_key=True)
     _password_hash= db.Column(db.String)
@@ -15,9 +15,9 @@ class User(db.Model, SerializerMixin):
     full_name = db.Column(db.String(100), nullable=False)
     
     # Define relationships
-    cart_items = db.relationship('Cart', backref='user', lazy=True)
-    addresses = db.relationship('Address', backref='user', lazy=True)
-    
+    cart_items = db.relationship('Cart_Items', backref='user', lazy = True)
+    addresses = db.relationship('Address', backref='user', lazy = True)
+
     @hybrid_property
     def password_hash(self):
         raise AttributeError("Password hash is not accessible")
@@ -31,8 +31,8 @@ class User(db.Model, SerializerMixin):
         return bcrypt.check_password_hash(
             self._password_hash, password.encode('utf-8'))
     
-class Address(db.Model):
-    __tablename__ = 'address'
+class Address(db.Model, SerializerMixin):
+    __tablename__ = 'addresses'
     id = db.Column(db.Integer, primary_key=True)
     street = db.Column(db.String(255), nullable=False)
     city = db.Column(db.String(100), nullable=False)
@@ -54,9 +54,9 @@ class Book(db.Model, SerializerMixin):
     category = db.Column(db.String)
     
     # Define relationships to other models
-    cart_items = db.relationship('Cart', backref='book', lazy=True)
+    cart_items = db.relationship('Cart_Items', backref='book', lazy = "dynamic")
 
-class Cart(db.Model):
+class Cart_Items(db.Model,SerializerMixin):
     __tablename__ = 'cart'
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))

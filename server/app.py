@@ -8,8 +8,8 @@ from flask_restful import Resource
 from sqlalchemy.exc import IntegrityError
 
 from config import app, db, api
-from models import User, Book, Cart, Address
-
+from models import User, Book, Cart_Items, Address
+import ipdb
 # Views go here!
 
 class Login(Resource):
@@ -61,21 +61,52 @@ class BooksById(Resource):
         book = Book.query.filter_by(id=id).first().to_dict()
         return make_response(jsonify(book),200)
     
-class Users(Resource):
+class UserCart(Resource):
     
-    def get(self):
-        users = [user.to_dict() for user in User.query.all()]
-        if users:
-            return make_response(jsonify(users), 200)
-        return [{"Message": "No Books"}], 404
+    def get(self,id):
+        user = User.query.get_or_404(id)
+       
+        if user:
+            cart = user.cart_items   
+            cart_items_json = [{
+            'book_id': cart_item.book_id,
+            'book_title': cart_item.book.title,
+            'book_price': cart_item.book.price,            
+            'quantity': cart_item.quantity,
+            'date_added': cart_item.added_date,
+            } for cart_item in cart] 
+                    
+            return jsonify({'user': user.full_name, 'cart_items': cart_items_json})
+        
+        return [{"Message": "Empty Cart"}], 404
+    
+class UserAddress(Resource):
+    
+    def get(self,id):
+        user = User.query.get_or_404(id)
+       
+        if user:
+            address = user.addresses  
+            addresses_json = [{
+            'street': addy.street,
+            'city': addy.city,
+            'state': addy.state,            
+            'code': addy.postal_code,
+            'country': addy.country,
+            } for addy in address] 
+                    
+            return jsonify({'user': user.full_name, 'cart_items': addresses_json})
+        
+        return [{"Message": "Empty Cart"}], 404
     
 api.add_resource(Signup, '/signup', endpoint='signup')
 api.add_resource(CheckSession, '/check_session', endpoint='check_session')
 api.add_resource(Login, '/login', endpoint='login')
-# api.add_resource(Logout, '/logout', endpoint='logout')
 api.add_resource(BooksIndex, '/books', endpoint='books')
 api.add_resource(BooksById,'/books/<int:id>', endpoint='books/id')
-api.add_resource(Users, '/users', endpoint='users')
+api.add_resource(UserCart, '/users/cart/<int:id>', endpoint='users/cart/id')
+api.add_resource(UserAddress, '/users/address/<int:id>', endpoint='users/address/id')
+
 
 
 if __name__ == '__main__':

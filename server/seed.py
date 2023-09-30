@@ -8,7 +8,7 @@ from faker import Faker
 
 # Local imports
 from app import app
-from models import db, User, Book, Address, Cart
+from models import db, User, Book, Address, Cart_Items
 
 if __name__ == '__main__':
     fake = Faker()
@@ -18,7 +18,7 @@ if __name__ == '__main__':
         Book.query.delete()
         User.query.delete()
         Address.query.delete()
-        Cart.query.delete()
+        Cart_Items.query.delete()
         
         print("Starting seed...")
         
@@ -89,7 +89,21 @@ if __name__ == '__main__':
         
         db.session.add_all(addresses)
         
+        print("Making Virtual carts...")
+        carts = []
+        for i in range(10):
+            
+            cart = Cart_Items(
+                quantity = randint(2,8)
+            )
+            
+            cart.user = rc(users)
+            cart.book = rc(books)
         
-        
+            carts.append(cart)
+            
+        db.session.add_all(carts)
         db.session.commit()
+        
+        print("All done seeding.")
 
