@@ -14,27 +14,30 @@ import json
 # Views go here!
 
 class Login(Resource):
-    def post(self):
-        data = request.get_json()
-        username = data.get('username')
-        password = data.get('password')
-        user = User.query.filter(User.username == username).first()
+    def get(self):
+        # data = request.get_json()
+        # email = data.get('email')
+        # password = data.get('password')
+        # user = User.query.filter(User.email == email).first()
+        user = User.query.get_or_404(3)
         if user:
-            if user.authenticate(password):
-                session['user_id'] = user.id
-                return user.to_dict(), 200
+            # if user.authenticate(password):
+            session['id'] = user.id
+            return user.to_dict(), 200
         return {'error': '401 Unauthorized'}, 401
 
 class CheckSession(Resource):
     def get(self):
-        if session.get('user_id'):
-            user = User.query.filter(User.id == session['user_id']).first()
+        
+        if session.get('id'):
+            user = User.query.filter(User.id == session['id']).first()
             return user.to_dict(), 200
         return {'error': '401 Unauthorized'}, 401
 
 class Signup(Resource):
     def post(self):        
         data = request.get_json()
+        
         email = data.get('email')
         name = data.get('name')        
         user = User(
@@ -64,17 +67,41 @@ class BooksById(Resource):
     
 class UserCart(Resource):
     
-    def get(self,id):
-        user = User.query.get_or_404(id)
-        cart = [item.to_dict() for item in user.cart_items] 
-        return make_response(jsonify(cart),200)
+    def get(self):
+        if session.get('id'):
+            user = User.query.get_or_404(session['id'])
+            cart = [item.to_dict() for item in user.cart_items] 
+            return make_response(jsonify(cart),200)
     
 class UserAddress(Resource):
     
-    def get(self,id):
-        user = User.query.get_or_404(id)
-        addresses = [item.to_dict() for item in user.address_] 
-        return make_response(jsonify(addresses),200)
+    def get(self):
+        if session.get('id'):
+            user = User.query.get_or_404(session['id'])
+            addresses = [item.to_dict() for item in user.address_] 
+            return make_response(jsonify(addresses),200)
+    
+class UserCart_Add(Resource):
+    
+    def get(self,book_id):
+        if session.get('id'):
+            
+            user = User.query.get_or_404(session['id'])
+            book = Book.query.filter(Book.id == book_id).first()
+            
+            if book:
+                try:
+                    cart = Cart_Items(
+                        
+                    )
+                    cart.user = (user)
+                    cart.book = (book)
+                    db.session.add(cart)
+                    db.session.commit()
+                    return cart.to_dict(),200
+                except IntegrityError:
+                    return {'error': '422 Unprocessable Entity'}, 422
+                
     
     
 api.add_resource(Signup, '/signup', endpoint='signup')
@@ -84,12 +111,13 @@ api.add_resource(Login, '/login', endpoint='login')
 api.add_resource(BooksIndex, '/books', endpoint='books')
 api.add_resource(BooksById,'/books/<int:id>', endpoint='books/id')
 
-api.add_resource(UserCart, '/users/cart/<int:id>', endpoint='users/cart/id')
+api.add_resource(UserCart, '/users/cart', endpoint='users/cart')
+api.add_resource(UserCart_Add, '/users/cart/<int:book_id>', endpoint='users/cart/book_id')
 # /cart/add/<int:book_id> (POST): 
 # /cart/remove/<int:book_id> (POST): 
 # /cart/update/<int:cart_item_id> (POST): 
 
-api.add_resource(UserAddress, '/users/address/<int:id>', endpoint='users/address/id')
+api.add_resource(UserAddress, '/users/address', endpoint='users/address')
 
 
 

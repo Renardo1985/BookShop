@@ -6,14 +6,13 @@ from config import db, bcrypt
 
 class User(db.Model, SerializerMixin):
     __tablename__ = 'users'    
-    serialize_rules = ('-address_.user', '-_password_hash','-cart_items.user',)
+    serialize_rules = ('-address_', '-_password_hash','-cart_items',)
     id = db.Column(db.Integer, primary_key=True)
     _password_hash= db.Column(db.String)
     email = db.Column(db.String(100), unique=True, nullable=False)
     full_name = db.Column(db.String(100), nullable=False)
-    
-    cart_items = db.relationship('Cart_Items', lazy = True)
-    address_ = db.relationship('Address', lazy = True)
+    cart_items = db.relationship('Cart_Items', backref='user')
+    address_ = db.relationship('Address')
 
     @hybrid_property
     def password_hash(self):
@@ -51,11 +50,12 @@ class Book(db.Model, SerializerMixin):
     description = db.Column(db.String)
     category = db.Column(db.String)
     
-    cart_items = db.relationship('Cart_Items', backref='book', lazy = True)
+    cart_items = db.relationship('Cart_Items', backref='book')
 
 class Cart_Items(db.Model,SerializerMixin):
-    __tablename__ = 'cart'
-    id = db.Column(db.Integer, primary_key=True)
+    __tablename__ = 'cart' 
+    serialize_rules = ('-user',)   
+    id = db.Column(db.Integer, primary_key=True)    
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
     book_id = db.Column(db.Integer, db.ForeignKey('books.id'))
     quantity = db.Column(db.Integer, default=1)  # Default to 1 book
