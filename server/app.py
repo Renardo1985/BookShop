@@ -10,6 +10,7 @@ from sqlalchemy.exc import IntegrityError
 from config import app, db, api
 from models import User, Book, Cart_Items, Address
 import ipdb
+import json
 # Views go here!
 
 class Login(Resource):
@@ -58,53 +59,36 @@ class BooksIndex(Resource):
 class BooksById(Resource):
     
     def get(self,id):
-        book = Book.query.filter_by(id=id).first().to_dict()
+        book = Book.query.get_or_404(id).to_dict()
         return make_response(jsonify(book),200)
     
 class UserCart(Resource):
     
     def get(self,id):
         user = User.query.get_or_404(id)
-       
-        if user:
-            cart = user.cart_items   
-            cart_items_json = [{
-            'book_id': cart_item.book_id,
-            'book_title': cart_item.book.title,
-            'book_price': cart_item.book.price,            
-            'quantity': cart_item.quantity,
-            'date_added': cart_item.added_date,
-            } for cart_item in cart] 
-                    
-            return jsonify({'user': user.full_name, 'cart_items': cart_items_json})
-        
-        return [{"Message": "Empty Cart"}], 404
+        cart = [item.to_dict() for item in user.cart_items] 
+        return make_response(jsonify(cart),200)
     
 class UserAddress(Resource):
     
     def get(self,id):
         user = User.query.get_or_404(id)
-       
-        if user:
-            address = user.addresses  
-            addresses_json = [{
-            'street': addy.street,
-            'city': addy.city,
-            'state': addy.state,            
-            'code': addy.postal_code,
-            'country': addy.country,
-            } for addy in address] 
-                    
-            return jsonify({'user': user.full_name, 'cart_items': addresses_json})
-        
-        return [{"Message": "Empty Cart"}], 404
+        addresses = [item.to_dict() for item in user.address_] 
+        return make_response(jsonify(addresses),200)
+    
     
 api.add_resource(Signup, '/signup', endpoint='signup')
 api.add_resource(CheckSession, '/check_session', endpoint='check_session')
 api.add_resource(Login, '/login', endpoint='login')
+
 api.add_resource(BooksIndex, '/books', endpoint='books')
 api.add_resource(BooksById,'/books/<int:id>', endpoint='books/id')
+
 api.add_resource(UserCart, '/users/cart/<int:id>', endpoint='users/cart/id')
+# /cart/add/<int:book_id> (POST): 
+# /cart/remove/<int:book_id> (POST): 
+# /cart/update/<int:cart_item_id> (POST): 
+
 api.add_resource(UserAddress, '/users/address/<int:id>', endpoint='users/address/id')
 
 

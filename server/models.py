@@ -5,18 +5,15 @@ from sqlalchemy.ext.hybrid import hybrid_property
 from config import db, bcrypt
 
 class User(db.Model, SerializerMixin):
-    __tablename__ = 'users'
-    
-    serialize_rules = ('-addresses.user', '-_password_hash','-cart_items.user')
-    
+    __tablename__ = 'users'    
+    serialize_rules = ('-address_.user', '-_password_hash','-cart_items.user',)
     id = db.Column(db.Integer, primary_key=True)
     _password_hash= db.Column(db.String)
     email = db.Column(db.String(100), unique=True, nullable=False)
     full_name = db.Column(db.String(100), nullable=False)
     
-    # Define relationships
-    cart_items = db.relationship('Cart_Items', backref='user', lazy = True)
-    addresses = db.relationship('Address', backref='user', lazy = True)
+    cart_items = db.relationship('Cart_Items', lazy = True)
+    address_ = db.relationship('Address', lazy = True)
 
     @hybrid_property
     def password_hash(self):
@@ -43,6 +40,7 @@ class Address(db.Model, SerializerMixin):
     
 class Book(db.Model, SerializerMixin):
     __tablename__ = 'books'
+    serialize_rules = ('-cart_items',)
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(100), nullable=False)
     isbn_13 = db.Column(db.String,unique=True)
@@ -53,8 +51,7 @@ class Book(db.Model, SerializerMixin):
     description = db.Column(db.String)
     category = db.Column(db.String)
     
-    # Define relationships to other models
-    cart_items = db.relationship('Cart_Items', backref='book', lazy = "dynamic")
+    cart_items = db.relationship('Cart_Items', backref='book', lazy = True)
 
 class Cart_Items(db.Model,SerializerMixin):
     __tablename__ = 'cart'
