@@ -4,15 +4,16 @@ from sqlalchemy.ext.hybrid import hybrid_property
 
 from config import db, bcrypt
 
+
 class User(db.Model, SerializerMixin):
-    __tablename__ = 'users'    
-    serialize_rules = ('-address_', '-_password_hash','-cart_items',)
+    __tablename__ = 'users'
+    serialize_rules = ('-address', '-_password_hash', '-cart_items',)
     id = db.Column(db.Integer, primary_key=True)
-    _password_hash= db.Column(db.String)
+    _password_hash = db.Column(db.String)
     email = db.Column(db.String(100), unique=True, nullable=False)
     full_name = db.Column(db.String(100), nullable=False)
     cart_items = db.relationship('Cart_Items', backref='user')
-    address_ = db.relationship('Address', backref='user')
+    address = db.relationship('Address', uselist=False, back_populates='user')
 
     @hybrid_property
     def password_hash(self):
@@ -26,7 +27,8 @@ class User(db.Model, SerializerMixin):
     def authenticate(self, password):
         return bcrypt.check_password_hash(
             self._password_hash, password.encode('utf-8'))
-    
+
+
 class Address(db.Model, SerializerMixin):
     __tablename__ = 'addresses'
     serialize_rules = ('-user',)
@@ -36,27 +38,30 @@ class Address(db.Model, SerializerMixin):
     state = db.Column(db.String(50), nullable=False)
     postal_code = db.Column(db.String(20), nullable=False)
     country = db.Column(db.String(100), nullable=False)
-    user_id = db.Column(db.Integer, db.ForeignKey('users.id'), unique = True)
-    
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'), unique=True)
+    user = db.relationship('User', back_populates='address')
+
+
 class Book(db.Model, SerializerMixin):
     __tablename__ = 'books'
     serialize_rules = ('-cart_items',)
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(100), nullable=False)
-    isbn_13 = db.Column(db.String,unique=True)
+    isbn_13 = db.Column(db.String, unique=True)
     author = db.Column(db.String(100))
     price = db.Column(db.Float)
     image = db.Column(db.String(100))
     publisher = db.Column(db.String(100))
     description = db.Column(db.String)
     category = db.Column(db.String)
-    
+
     cart_items = db.relationship('Cart_Items', backref='book')
 
-class Cart_Items(db.Model,SerializerMixin):
-    __tablename__ = 'cart' 
-    serialize_rules = ('-user',)   
-    id = db.Column(db.Integer, primary_key=True)    
+
+class Cart_Items(db.Model, SerializerMixin):
+    __tablename__ = 'cart'
+    serialize_rules = ('-user',)
+    id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
     book_id = db.Column(db.Integer, db.ForeignKey('books.id'))
     quantity = db.Column(db.Integer, default=1)  # Default to 1 book
