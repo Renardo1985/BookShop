@@ -27,7 +27,7 @@ if __name__ == '__main__':
         users = []
         emails = []
 
-        for i in range(20):
+        for i in range(30):
             email = fake.email()
             while email in emails:
                 email = fake.email()
@@ -73,6 +73,8 @@ if __name__ == '__main__':
         print("Generating Addresses...")
         
         addresses = []
+       
+        
         for i in range(20):  
             
             address = Address(
@@ -83,8 +85,7 @@ if __name__ == '__main__':
                 country = fake.current_country(),
             )
             
-            address.user = rc(users)
-            
+            address.user = (users[i])      
             addresses.append(address)
         
         db.session.add_all(addresses)
