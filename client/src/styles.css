@@ -1,0 +1,25 @@
+:root {
+  --bg: #282c34;
+  --header: #fff;
+  --link: #61dafb;
+  --text: hsla(0, 0%, 100%, 0.88);
+}
+.foot-icon {
+  width: 20px;
+  height: 20px;
+  margin-right: 1rem;
+}
+
+body{
+  color: white;
+  background-color: black;
+}
+
+.mt-5{
+  color: gray;
+
+}
+
+.navbar {
+  font-size: larger;
+}
