@@ -25,12 +25,12 @@ class Login(Resource):
             if user.authenticate(password):
                 session['id'] = user.id
                 return user.to_dict(), 200
-            return {'error': '401 Unauthorized'}, 401
+        
+        return {'error': '401 Unauthorized'}, 401
 
 
 class Logout(Resource):
     def get(self):
-
         if session.get('id'):
             session['id'] = None
             return {}, 200
@@ -39,9 +39,8 @@ class Logout(Resource):
 
 class CheckSession(Resource):
     def get(self):
-
         if session.get('id'):
-            user = User.query.filter(User.id == session['id']).first()
+            user = User.query.get_or_404(session['id'])
             return user.to_dict(), 200
         return {'error': 'No User logged in'}, 401
 
@@ -49,7 +48,6 @@ class CheckSession(Resource):
 class Signup(Resource):
     def post(self):
         data = request.get_json()
-
         email = data.get('email')
         name = data.get('name')
         user = User(
@@ -81,7 +79,8 @@ class BooksById(Resource):
 
 class UserCart(Resource):
     def get(self):
-        session['id'] = 2
+        
+        # ipdb.set_trace()
         if session.get('id'):
             user = User.query.get_or_404(session['id'])
             cart = [item.to_dict() for item in user.cart_items]
@@ -91,7 +90,7 @@ class UserCart(Resource):
 class UserCart_CUD(Resource):
 
     def post(self, id):
-        session['id'] = 2
+        
         if session.get('id'):
             user = User.query.get_or_404(session['id'])
             book = Book.query.filter(Book.id == id).first()
@@ -111,7 +110,7 @@ class UserCart_CUD(Resource):
                     return {'error': '422 Unprocessable Entity'}, 422
 
     def delete(self, id):
-        session['id'] = 2
+        
         if session.get('id'):
             user = User.query.get_or_404(session['id'])
             book = Book.query.filter(Book.id == id).first()
@@ -123,7 +122,7 @@ class UserCart_CUD(Resource):
                 db.session.commit()
 
     def patch(self, id):
-        session['id'] = 2
+        
         if session.get('id'):
             user = User.query.get_or_404(session['id'])
             book = Book.query.filter(Book.id == id).first()
@@ -140,7 +139,7 @@ class UserCart_CUD(Resource):
 class UserAddress_CRUD(Resource):
 
     def post(self):
-        session['id'] = 2
+        
         if session.get('id'):
             user = User.query.get_or_404(session['id'])
             data = request.get_json()
@@ -161,14 +160,14 @@ class UserAddress_CRUD(Resource):
                     return {'error': '422 Unprocessable Entity'}, 422
 
     def get(self):
-        session['id'] = 2
+        
         if session.get('id'):
             user = User.query.get_or_404(session['id'])
             if user:
                 return make_response(jsonify(user.address.to_dict()), 200)
 
     def patch(self):
-        session['id'] = 2
+        
         data = request.get_json()
         user = User.query.get_or_404(session['id'])
 
@@ -182,7 +181,7 @@ class UserAddress_CRUD(Resource):
             db.session.commit()
 
     def delete(self):
-        session['id'] = 2
+        
         if session.get('id'):
             user = User.query.get_or_404(session['id'])
 
