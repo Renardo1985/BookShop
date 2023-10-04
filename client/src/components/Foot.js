@@ -19,7 +19,7 @@ export default function Foot() {
           />
         </a>
         <div>
-        <p>Millersville, MD, 21108 <br></br>Phone: (000)000-0000 <br></br>&copy;2023 The Bookstore</p>
+        <p>Millersville, MD, 21108 <br></br>Phone: (000)000-0000 <br></br>&copy;2023 The Bookshop</p>
         </div>
       </footer>
     </div>

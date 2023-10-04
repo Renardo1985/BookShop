@@ -1,16 +1,21 @@
 import { useState } from "react";
-import { Link } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
+
+import Form from "react-bootstrap/Form";
+import InputGroup from "react-bootstrap/InputGroup";
+import Button from "react-bootstrap/Button";
+import { Container, Row, Col} from "react-bootstrap";
 
 function Login({ onLogin }) {
-  const [showLogin, setShowLogin] = useState(true);
+  
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [errors, setErrors] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState('');
+  const nav = useNavigate();
 
   function handleSubmit(e) {
     e.preventDefault();
-    setIsLoading(true);
+    
     fetch("/login", {
       method: "POST",
       headers: {
@@ -18,42 +23,58 @@ function Login({ onLogin }) {
       },
       body: JSON.stringify({ email , password }),
     }).then((r) => {
-      setIsLoading(false);
       if (r.ok) {
         r.json().then((user) => onLogin(user));
+        nav('/')
       } else {
-        r.json().then((err) => setErrors(err.errors));
+        r.json().then((err) => setError(err));
       }
-    });
+    })
   }
 
   return (
     <>
-    <div className='login-form-page'>
-      <form className='login-form' onSubmit={handleSubmit}>
-        <h1 className='form-title'>BookStore</h1>
-        <label className='form-label' htmlFor='email'>Email:</label>
-        <input
-          type='text'
-          id='email'
-          placeholder='Enter email'
-          autoComplete='off'
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}>
-        </input>
-        <label className='form-label' htmlFor='password'>Password: </label>
-        <input 
-          type='text'
-          id='password'
-          placeholder='Enter password'
-          autoComplete='current-password'
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}>
-        </input>
-        <button id='login-button' type='submit' value='Login'>Login</button>
-       
-        <span className="signup-link">Don't have an account? <a href="/account_signup">Sign up!</a></span>
-      </form>
+    <div className='login-page'>
+      <Container >
+      <Row className="justify-content-md-center">
+      <Col xs lg ='7'>
+      <Form style={{ padding: 30 }} className="login-form" onSubmit={handleSubmit}>
+      <Form.Label>Login</Form.Label>
+
+      <InputGroup className="mb-3">
+          <InputGroup.Text id="basic-addon1">Email Address</InputGroup.Text>
+          <Form.Control
+            type="text"
+            id="genre"
+            required={true}
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+          />
+        </InputGroup>
+
+       <InputGroup className="mb-3">
+          <InputGroup.Text id="basic-addon1">Password</InputGroup.Text>
+          <Form.Control
+            type="text"
+            id="password"
+            required={true}
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
+        </InputGroup>
+    
+
+      <InputGroup className="mb-3">
+        <Button id='signup-button' type='submit'>Login</Button>
+        </InputGroup>
+      <InputGroup className="mb-3">
+        <Form.Label> Don't have an account? <a href="/signup">Sign up!</a> </Form.Label> 
+        </InputGroup>
+        {error ? <Form.Label> {error.error}</Form.Label>:null}
+      </Form>
+      </Col>
+      </Row>
+      </Container>
     </div>
   </>
 );

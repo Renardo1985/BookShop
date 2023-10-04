@@ -1,8 +1,42 @@
 import React from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { Navbar, Nav, Container } from "react-bootstrap";
 
-function NavBar() {
+function NavBar({setUser, user}) {
+const nav = useNavigate();
+
+  const logout = () => {
+    fetch("/logout", {method: "GET"}
+    )
+    .then((r) => {
+      if (r.ok) {
+        setUser(null) 
+        nav("/")
+      }
+    });
+  }
+
+  if (!user) 
+  return ( 
+  <Navbar  data-bs-theme="dark">
+  <Container fluid>
+    <Nav>
+      <NavLink className="nav-link" exact= 'true' to="/">
+        Home
+      </NavLink>
+    </Nav>
+    <Navbar.Collapse className="justify-content-end">
+    <Nav>
+    <NavLink className="nav-link" to="/login">
+        Login
+      </NavLink>
+      </Nav>
+    </Navbar.Collapse>
+  </Container>
+  </Navbar>
+   
+  );  
+
   return (
     <Navbar  data-bs-theme="dark">
       <Container fluid>
@@ -15,16 +49,16 @@ function NavBar() {
             Books
           </NavLink>
 
-          <NavLink className="nav-link" exact to="/cart">
+          <NavLink className="nav-link" exact to="/cart" >
            Cart
           </NavLink>
         </Nav>
         <Navbar.Collapse className="justify-content-end">
         <Nav>
         <NavLink className="nav-link" to="/user">
-            Profile
+            {user.full_name}
           </NavLink>
-          <NavLink className="nav-link" to="/logout">
+          <NavLink className="nav-link" onClick={logout} >
             Logout
           </NavLink>
           </Nav>
