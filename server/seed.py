@@ -65,7 +65,7 @@ if __name__ == '__main__':
         print("Generating Addresses...")        
         addresses = []       
         
-        for i in range(20):            
+        for i in range(30):            
             address = Address(
                 street = fake.street_address(),
                 city = fake.city(),

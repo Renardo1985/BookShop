@@ -6,13 +6,55 @@
 from flask import request, session, make_response, jsonify
 from flask_restful import Resource
 from sqlalchemy.exc import IntegrityError
+from sqlalchemy.exc import SQLAlchemyError
 
-from config import app, db, api
+from werkzeug.utils import secure_filename
+
+from marshmallow import fields
+
+from config import app, db, api, ma
 from models import User, Book, Cart_Items, Address
 import ipdb
 import json
-# Views go here!
 
+
+
+class User_Schema(ma.SQLAlchemySchema):
+    class Meta: 
+        model = User 
+        include_fk = True        
+    id = ma.auto_field()
+    full_name = ma.auto_field()
+    email = ma.auto_field()
+    address = ma.auto_field()
+    cart_items = ma.auto_field()
+    
+    
+class Book_Schema(ma.SQLAlchemyAutoSchema):
+    class Meta: 
+        model = Book
+        include_fk = True
+    
+class Cart_Schema(ma.SQLAlchemyAutoSchema):
+    class Meta: 
+        model = Cart_Items
+        include_fk = True
+    
+class Address_Schema(ma.SQLAlchemyAutoSchema):
+    class Meta: 
+        model = Address
+        include_fk = True    
+    
+   
+user_schema = User_Schema()
+
+book_schema = Book_Schema()
+books_schema = Book_Schema(many = True)
+
+cart_schema = Cart_Schema()
+carts_schema = Cart_Schema(many = True)
+
+address_schema = Address_Schema()
 
 class Login(Resource):
     def post(self):
@@ -24,7 +66,7 @@ class Login(Resource):
         if user:
             if user.authenticate(password):
                 session['id'] = user.id
-                return user.to_dict(), 200
+                return user_schema.dump(user), 200
         
         return {'error': '401 Unauthorized'}, 401
 
@@ -40,9 +82,9 @@ class Logout(Resource):
 class CheckSession(Resource):
     def get(self):
         if session.get('id'):
-            user = User.query.get_or_404(session['id'])
-            return user.to_dict(), 200
-        return {'error': 'No User logged in'}, 401
+            user = User.query.filter(User.id == session['id']).first()
+            return user_schema.dump(user), 200
+        return {'error': 'No User logged in'}, 404
 
 
 class Signup(Resource):
@@ -55,32 +97,34 @@ class Signup(Resource):
             full_name=name
         )
         user.password_hash = data['password']
-        try:
-            db.session.add(user)
+        db.session.add(user)
+        
+        try:            
             db.session.commit()
             return make_response(user.to_dict(), 200)
-        except IntegrityError:
-            return {'error': '422 Unprocessable Entity'}, 422
+        
+        except ValueError as e:
+            db.session.rollback()
+            session.close()
+            return jsonify({"error":str(e)}), 422
 
 
 class BooksIndex(Resource):
     def get(self):
-        books = [book.to_dict() for book in Book.query.all()]
+        books =  Book.query.all()
         if books:
-            return make_response(jsonify(books), 200)
+            return books_schema.dump(books), 200
         return [{"Message": "No Books"}], 404
 
 
 class BooksById(Resource):
     def get(self, id):
         book = Book.query.get_or_404(id).to_dict()
-        return make_response(jsonify(book), 200)
+        return book_schema.dump(book), 200
 
 
 class UserCart(Resource):
     def get(self):
-        
-        # ipdb.set_trace()
         if session.get('id'):
             user = User.query.get_or_404(session['id'])
             cart = [item.to_dict() for item in user.cart_items]
@@ -105,9 +149,10 @@ class UserCart_CUD(Resource):
                     cart.quantity = quantity
                     db.session.add(cart)
                     db.session.commit()
+                    
                     return cart.to_dict(), 200
                 except IntegrityError:
-                    return {'error': '422 Unprocessable Entity'}, 422
+                    return {"error": "422: Unprocessable Entity"}, 422
 
     def delete(self, id):
         

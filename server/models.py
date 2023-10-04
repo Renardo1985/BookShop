@@ -43,13 +43,10 @@ class User(db.Model, SerializerMixin):
         
     @validates('email')
     def validate_email(self, key, email):
-        if not email:
-            raise ValueError("Email address cannot be empty.")
         # Use a simple regular expression to check the email format
         email_regex = re.compile(r"[^@]+@[^@]+\.[^@]+")
         if not email_regex.match(email):
-            raise ValueError("Invalid email format.")
-
+            raise ValueError ("Validation Failed: Please enter a valid email address")
         return email
 
 
