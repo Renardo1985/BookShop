@@ -1,14 +1,9 @@
 #!/usr/bin/env python3
 
-# Standard library imports
 from random import randint, choice as rc
-
-# Remote library imports
 from faker import Faker
-
-# Local imports
 from app import app
-from models import db, User, Book, Address, Cart_Items
+from models import db, User, Book, Address, Cart_Items 
 
 if __name__ == '__main__':
     fake = Faker()
@@ -19,6 +14,7 @@ if __name__ == '__main__':
         User.query.delete()
         Address.query.delete()
         Cart_Items.query.delete()
+      
         
         print("Starting seed...")        
         print("Creating users...")
@@ -53,7 +49,6 @@ if __name__ == '__main__':
                 title= fake.sentence(nb_words = 4),
                 isbn_13= isbn,
                 author= fake.name(),
-                # price= "%.2f" % price,
                 price= price,
                 image= fake.url(),
                 publisher= fake.company(),
@@ -79,14 +74,19 @@ if __name__ == '__main__':
         
         print("Making Virtual carts...")
         carts = []
-        for i in range(10):            
+        for i in range(15):            
             cart = Cart_Items(
                 quantity = randint(1,5)
             )            
-            cart.user = rc(users)
-            cart.book = rc(books)        
-            carts.append(cart)            
+            cart.user = rc(users)            
+            cart.book = rc(books)                    
+            
+            carts.append(cart)   
+            
+                     
         db.session.add_all(carts)
+        
+        
         db.session.commit()
         
         print("All done seeding.")
