@@ -3,7 +3,7 @@
 from random import randint, choice as rc
 from faker import Faker
 from app import app
-from models import db, User, Book, Address, Cart_Items 
+from models import db, User, Book, Address, Cart_Items, cart_table
 
 if __name__ == '__main__':
     fake = Faker()
@@ -58,8 +58,7 @@ if __name__ == '__main__':
             books.append(book)
         db.session.add_all(books)        
         print("Generating Addresses...")        
-        addresses = []       
-        
+        addresses = [] 
         for i in range(30):            
             address = Address(
                 street = fake.street_address(),
@@ -68,9 +67,11 @@ if __name__ == '__main__':
                 postal_code = fake.postcode(),
                 country = fake.current_country(),
             )            
-            address.user = (users[i])      
+            address.user = rc(users)      
             addresses.append(address)        
-        db.session.add_all(addresses)
+        db.session.add_all(addresses)   
+                   
+        
         
         print("Making Virtual carts...")
         carts = []
@@ -85,8 +86,6 @@ if __name__ == '__main__':
             
                      
         db.session.add_all(carts)
-        
-        
         db.session.commit()
         
         print("All done seeding.")

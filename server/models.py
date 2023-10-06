@@ -1,5 +1,4 @@
 from sqlalchemy_serializer import SerializerMixin
-from sqlalchemy.ext.associationproxy import association_proxy
 from sqlalchemy.ext.hybrid import hybrid_property
 from sqlalchemy.orm import validates
 import re
@@ -9,10 +8,11 @@ from config import db, bcrypt
 
 cart_table = db.Table(
     'cart',
-    db.Column('user_id', db.Integer, db.ForeignKey('user.id')),
-    db.Column('book_id', db.Integer, db.ForeignKey('book.id'))
+    db.Column('user_id', db.ForeignKey('user.id')),
+    db.Column('book_id', db.ForeignKey('book.id')),
+    db.Column('cart_item_id', db.ForeignKey('cart_item.id'))
 )
-
+   
 
 class User(db.Model, SerializerMixin):
     __tablename__ = 'user'
@@ -24,11 +24,10 @@ class User(db.Model, SerializerMixin):
     full_name = db.Column(db.String(100), nullable=False)
     is_admin = db.Column(db.Boolean(), default=False)
 
-    cart_items = db.relationship('Cart_Items', backref='user')
-    address = db.relationship('Address', uselist=False, backref='user')
-    books = db.relationship('Book', secondary=cart_table, backref='users')
-
-    # books = association_proxy('books_in_cart', 'title')
+    cart_items = db.relationship('Cart_Items', backref='user')    
+    books = db.relationship('Book', secondary=cart_table, backref='users') 
+    
+    address = db.relationship('Address', backref='user')
 
     @hybrid_property
     def password_hash(self):
@@ -61,7 +60,7 @@ class Address(db.Model, SerializerMixin):
     state = db.Column(db.String(50), nullable=False)
     postal_code = db.Column(db.String(20), nullable=False)
     country = db.Column(db.String(100), nullable=False)
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), unique=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
 
 
 class Book(db.Model, SerializerMixin):
@@ -76,8 +75,11 @@ class Book(db.Model, SerializerMixin):
     publisher = db.Column(db.String(100))
     description = db.Column(db.String)
     category = db.Column(db.String)
+    
+    #many-to-many relationship between Book and Cart
+    cart_items = db.relationship('Cart_Items', backref ='book')
+    
 
-    cart_items = db.relationship('Cart_Items', backref='book')
 
     @validates('isbn_13')
     def validate_isbn_13(self, key, isbn_13):
@@ -110,3 +112,5 @@ class Cart_Items(db.Model, SerializerMixin):
 
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     book_id = db.Column(db.Integer, db.ForeignKey('book.id'))
+    
+   
