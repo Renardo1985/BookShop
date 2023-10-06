@@ -31,7 +31,7 @@ function AddAddress({setAddress}) {
     }).then((r) => {
       setIsLoading(false);
       if (r.ok) {
-        r.json().then((address) => setAddress(address));
+        // r.json().then((address) => setAddress(address));
         nav("/user")    
       } 
       else {

@@ -2,26 +2,25 @@ import React, { useEffect, useState } from "react";
 import { Container, Row, Col, Button, Card } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 
-function UserProfile({ user, address, setAddress}) {
+import AddressCard from "./AddressCard.js";
+
+function UserProfile({ user, address, setAddress, setUser}) {
+
+  
   
   const nav = useNavigate();
 
-  function deleteAddress() {
-    fetch("/address", {
-      method: "DELETE",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    }).then((r) => {
-      if (r.ok) {
-        nav("/user");
-        setAddress(null)
-      } else {
-        r.json().then((err) => console.log(err));
-      }
+  useEffect(() => {
+    fetch('/address').then(res => {
+      if (res.ok) {
+        res.json().then(addy =>
+          setAddress(addy),
+        )
+      };
     });
-  }
+  }, [setAddress]);
 
+ 
   if (!address)
     return (
       <div className="profile">
@@ -55,18 +54,19 @@ function UserProfile({ user, address, setAddress}) {
         <Row>
           <p>Welcome {user.full_name}.</p>
         </Row>
-        <p>We have your address as:</p>
+        <Row>
+          <p>Purchase History : work in progress...</p>
+        </Row>
+        <p>Address(s) on file:</p>
         <Row>
           <Col>
-            <Card>
-              <Card.Body>
-                <Card.Title>Street: {address.street}</Card.Title>
-                <Card.Text>City: {address.city}</Card.Text>
-                <Button href="/updateaddress">Update</Button>{" "}
-                <Button onClick={deleteAddress}>Delete</Button>
-              </Card.Body>
-            </Card>
+          {address.map((item) => ( <AddressCard key = {item.id} address = {item} setAddress={setAddress}/> ))} 
           </Col>
+          <Row>
+            <Col>
+          <Button href="/addaddress">Add Other Address</Button>
+          </Col>
+          </Row>
         </Row>
       </Container>
     </div>

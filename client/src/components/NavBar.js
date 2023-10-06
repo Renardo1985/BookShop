@@ -2,8 +2,9 @@ import React from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import { Navbar, Nav, Container } from "react-bootstrap";
 
-function NavBar({setUser, user}) {
+function NavBar({setUser, user, cart}) {
 const nav = useNavigate();
+let sum = null
 
   const logout = () => {
     fetch("/logout", {method: "GET"}
@@ -16,7 +17,7 @@ const nav = useNavigate();
     });
   }
 
-  if (!user) 
+  if (!user) {
   return ( 
   <Navbar  data-bs-theme="dark">
   <Container fluid>
@@ -35,7 +36,12 @@ const nav = useNavigate();
   </Container>
   </Navbar>
    
-  );  
+  );  }
+
+  // sum of quantity in cart
+  if (cart){
+    for (const object of cart){sum+= object.quantity}
+  } 
 
   return (
     <Navbar  data-bs-theme="dark">
@@ -50,7 +56,7 @@ const nav = useNavigate();
           </NavLink>
 
           <NavLink className="nav-link" exact to="/cart" >
-           Cart
+           {sum ? `Cart [${sum}]`: 'Cart'}
           </NavLink>
         </Nav>
         <Navbar.Collapse className="justify-content-end">

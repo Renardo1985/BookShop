@@ -13,11 +13,10 @@ import UserProfile from "./UserProfile";
 import UpdateAddress from "./UpdateAddress";
 
 function App() {
-  const [user, setUser] = useState(null);   
+  const [user, setUser] = useState();   
   const [books, setBooks] = useState([])   
   const [address, setAddress] = useState(null)
-
-  console.log(user)
+  const [cart, setCart] = useState([])
 
   useEffect(() => { 
     fetch("/check_session")
@@ -47,27 +46,55 @@ function App() {
         res.json().then((address) => setAddress(address));
       }
     });
+  }, []);  
+
+  useEffect(() => {
+    fetch('/cart').then(res => {
+      if (res.ok) {
+        res.json().then(items =>
+          setCart(items),
+        )
+      };
+    });
   }, []);
 
-  
-
+  if(user)
+  {
   return (
     <main>
-    <NavBar setUser ={setUser} user={user}/>
+    <NavBar setUser ={setUser} user={user} cart={cart}/>
     <Routes> 
     <Route path="/" element ={<Home/>}/>    
-    <Route path="/books" element ={<BookList books = {books} user = {user}/>} /> 
+    <Route path="/books" element ={<BookList books = {books} setCart={setCart}/>} /> 
     <Route path="/login" element ={<Login onLogin ={setUser}/>} />  
     <Route path="/signup" element ={<SignUp setUser ={setUser}/>} />  
-    <Route path="/cart" element ={<Cart/>} /> 
-    <Route path="/user" element ={<UserProfile user = {user} address ={address} setAddress={setAddress}/>}/>
+    <Route path="/cart" element ={<Cart cart={cart} setCart={setCart}/>} /> 
+
+    <Route path="/user" element ={<UserProfile user = {user} address ={address} setAddress={setAddress} setUser={setUser}/>}/>
     <Route path="/addaddress" element ={<AddAddress setAddress={setAddress}/>}/>
     <Route path="/updateaddress" element ={<UpdateAddress address = {address} setAddress={setAddress}/>}/>
+
     <Route path="*" element ={<><h1>404 not Found</h1> <h3> Sorry Nothing here!! </h3></> }/> 
     </Routes>
     <Foot />
   </main>
   );
 }
+else
+{
+  return (
+    <main>
+    <NavBar setUser ={setUser} user={user} cart={cart}/>
+    <Routes> 
+    <Route path="/" element ={<Home/>}/>    
+    <Route path="/login" element ={<Login onLogin ={setUser}/>} />  
+    <Route path="/signup" element ={<SignUp setUser ={setUser}/>} />  
+    <Route path="*" element ={<><h1>404 not Found</h1> <h3> Sorry Nothing here!! </h3></> }/> 
+    </Routes>
+    <Foot />
+  </main>
+  );
 
+}
+}
 export default App;
