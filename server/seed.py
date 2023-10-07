@@ -10,6 +10,7 @@ if __name__ == '__main__':
     with app.app_context():
         
         print("Deleting all records...")
+        db.session.execute(cart_table.delete())
         Book.query.delete()
         User.query.delete()
         Address.query.delete()

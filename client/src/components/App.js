@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, createContext } from "react";
 import { Route, Routes, useNavigate } from "react-router-dom";
 
 import Login from "./Login";
@@ -12,7 +12,9 @@ import BookList from "./BooksList";
 import UserProfile from "./UserProfile";
 import UpdateAddress from "./UpdateAddress";
 
-function App() {
+const userData = createContext();
+
+export default function App() {
   const [user, setUser] = useState();   
   const [books, setBooks] = useState([])   
   const [address, setAddress] = useState(null)
@@ -23,6 +25,7 @@ function App() {
       .then((res) => {  
         if (res.ok) {
           res.json().then((user) => setUser(user));
+
         }
         else{
           res.json().then((err) => console.log(err));          
@@ -61,8 +64,9 @@ function App() {
   if(user)
   {
   return (
-    <main>
-    <NavBar setUser ={setUser} user={user} cart={cart}/>
+    <div className="App">
+    <userData.Provider value={user}>
+    <NavBar setUser ={setUser} cart={cart}/>
     <Routes> 
     <Route path="/" element ={<Home/>}/>    
     <Route path="/books" element ={<BookList books = {books} setCart={setCart}/>} /> 
@@ -70,14 +74,15 @@ function App() {
     <Route path="/signup" element ={<SignUp setUser ={setUser}/>} />  
     <Route path="/cart" element ={<Cart cart={cart} setCart={setCart}/>} /> 
 
-    <Route path="/user" element ={<UserProfile user = {user} address ={address} setAddress={setAddress} setUser={setUser}/>}/>
+    <Route path="/user" element ={<UserProfile address ={address} setAddress={setAddress} setUser={setUser}/>}/>
     <Route path="/addaddress" element ={<AddAddress setAddress={setAddress}/>}/>
     <Route path="/updateaddress" element ={<UpdateAddress address = {address} setAddress={setAddress}/>}/>
 
     <Route path="*" element ={<><h1>404 not Found</h1> <h3> Sorry Nothing here!! </h3></> }/> 
     </Routes>
     <Foot />
-  </main>
+    </userData.Provider>
+  </div>
   );
 }
 else
@@ -97,4 +102,4 @@ else
 
 }
 }
-export default App;
+export {userData};

@@ -52,6 +52,7 @@ class Signup(Resource):
 
         try:
             db.session.commit()
+            session['id'] = user.id
             return make_response(user.to_dict(), 200)
 
         except AttributeError as e:

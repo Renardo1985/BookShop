@@ -1,9 +1,12 @@
-import React from "react";
+import React, { useContext } from 'react';
 import { NavLink, useNavigate } from "react-router-dom";
 import { Navbar, Nav, Container } from "react-bootstrap";
+import {userData} from './App';
 
-function NavBar({setUser, user, cart}) {
+function NavBar({setUser, cart}) {
 const nav = useNavigate();
+const user = useContext(userData);
+
 let sum = null
 
   const logout = () => {

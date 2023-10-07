@@ -1,13 +1,13 @@
-import React, { useEffect, useState } from "react";
-import { Container, Row, Col, Button, Card } from "react-bootstrap";
+
+import React, { useEffect, useContext } from 'react';
+import { Container, Row, Col, Button} from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 
 import AddressCard from "./AddressCard.js";
+import {userData} from './App';
 
-function UserProfile({ user, address, setAddress, setUser}) {
-
-  
-  
+function UserProfile({ address, setAddress, setUser}) {
+  const user = useContext(userData);
   const nav = useNavigate();
 
   useEffect(() => {

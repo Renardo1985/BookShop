@@ -44,8 +44,8 @@ function Login({ onLogin }) {
       <InputGroup className="mb-3">
           <InputGroup.Text id="basic-addon1">Email Address</InputGroup.Text>
           <Form.Control
-            type="text"
-            id="genre"
+            type="email"
+            id="email"
             required={true}
             value={email}
             onChange={(e) => setEmail(e.target.value)}
@@ -55,7 +55,7 @@ function Login({ onLogin }) {
        <InputGroup className="mb-3">
           <InputGroup.Text id="basic-addon1">Password</InputGroup.Text>
           <Form.Control
-            type="text"
+            type="password"
             id="password"
             required={true}
             value={password}
