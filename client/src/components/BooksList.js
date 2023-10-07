@@ -3,11 +3,11 @@ import { Container, Row, Col, Card, Button } from 'react-bootstrap';
 import BookCard from "./BookCard";
 
 
-function BookList({books, setCart}) {  
+function BookList({books, setUser}) {  
 
   return (
     <Container className="card-container">     
-        {books.map((book) => ( <BookCard key = {book.id} book = {book} setCart={setCart}/> ))}     
+        {books.map((book) => ( <BookCard key = {book.id} book = {book} /> ))}     
     </Container>
   );
 };

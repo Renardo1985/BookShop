@@ -3,10 +3,9 @@ import { NavLink, useNavigate } from "react-router-dom";
 import { Navbar, Nav, Container } from "react-bootstrap";
 import {userData} from './App';
 
-function NavBar({setUser, cart}) {
+function NavBar({setUser}) {
 const nav = useNavigate();
 const user = useContext(userData);
-
 let sum = null
 
   const logout = () => {
@@ -42,8 +41,8 @@ let sum = null
   );  }
 
   // sum of quantity in cart
-  if (cart){
-    for (const object of cart){sum+= object.quantity}
+  if (user.cart_items){
+    for (const object of user.cart_items){sum+= object.quantity}
   } 
 
   return (

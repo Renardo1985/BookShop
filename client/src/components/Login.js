@@ -6,7 +6,7 @@ import InputGroup from "react-bootstrap/InputGroup";
 import Button from "react-bootstrap/Button";
 import { Container, Row, Col} from "react-bootstrap";
 
-function Login({ onLogin }) {
+function Login({ setUser }) {
   
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -24,7 +24,7 @@ function Login({ onLogin }) {
       body: JSON.stringify({ email , password }),
     }).then((r) => {
       if (r.ok) {
-        r.json().then((user) => onLogin(user));
+        r.json().then((user) => setUser(user));
         nav('/')
       } else {
         r.json().then((err) => setError(err));

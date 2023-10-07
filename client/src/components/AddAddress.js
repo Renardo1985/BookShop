@@ -5,7 +5,7 @@ import InputGroup from "react-bootstrap/InputGroup";
 import Button from "react-bootstrap/Button";
 import { Container, Row, Col} from "react-bootstrap";
 
-function AddAddress({setAddress}) {
+function AddAddress() {
 
   const [street, setStreet] = useState("");
   const [city, setCity] = useState("");
@@ -31,7 +31,6 @@ function AddAddress({setAddress}) {
     }).then((r) => {
       setIsLoading(false);
       if (r.ok) {
-        // r.json().then((address) => setAddress(address));
         nav("/user")    
       } 
       else {

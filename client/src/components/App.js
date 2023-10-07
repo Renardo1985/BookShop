@@ -18,8 +18,6 @@ const userData = createContext();
 export default function App() {
   const [user, setUser] = useState();   
   const [books, setBooks] = useState([])   
-  const [address, setAddress] = useState(null)
-  const [cart, setCart] = useState([])
 
   useEffect(() => { 
     fetch("/check_session")
@@ -41,41 +39,24 @@ export default function App() {
         )
       };
     });
-  }, []);
+  }, []); 
 
-  useEffect(() => {
-    fetch("/address").then((res) => {
-      if (res.ok) {
-        res.json().then((address) => setAddress(address));
-      }
-    });
-  }, []);  
-
-  useEffect(() => {
-    fetch('/cart').then(res => {
-      if (res.ok) {
-        res.json().then(items =>
-          setCart(items),
-        )
-      };
-    });
-  }, []);
 
   if(user)
   {
   return (
     <div className="App">
     <userData.Provider value={user}>
-    <NavBar setUser ={setUser} cart={cart}/>
+    <NavBar setUser ={setUser} />
     <Routes> 
     <Route path="/" element ={<Home/>}/>    
-    <Route path="/books" element ={<BookList books = {books} setCart={setCart}/>} /> 
-    <Route path="/login" element ={<Login onLogin ={setUser}/>} />  
+    <Route path="/books" element ={<BookList books = {books} setUser={setUser}/>} /> 
+    <Route path="/login" element ={<Login setUser ={setUser}/>} />  
     <Route path="/signup" element ={<SignUp setUser ={setUser}/>} />  
-    <Route path="/cart" element ={<Cart cart={cart} setCart={setCart}/>} /> 
+    <Route path="/cart" element ={<Cart setUser={setUser}/>} /> 
 
-    <Route path="/user" element ={<UserProfile  address ={address} setAddress={setAddress} setUser={setUser}/>}/>
-    <Route path="/addaddress" element ={<AddAddress setAddress={setAddress}/>}/> 
+    <Route path="/user" element ={<UserProfile setUser={setUser}/>}/>
+    <Route path="/addaddress" element ={<AddAddress/>}/> 
     <Route path="*" element ={<><h1>404 not Found</h1> <h3> Sorry Nothing here!! </h3></> }/> 
     </Routes>
     <Foot />
@@ -87,10 +68,10 @@ else
 {
   return (
     <main>
-    <NavBar setUser ={setUser} user={user} cart={cart}/>
+    <NavBar setUser ={setUser} user={user} />
     <Routes> 
     <Route path="/" element ={<Home/>}/>    
-    <Route path="/login" element ={<Login onLogin ={setUser}/>} />  
+    <Route path="/login" element ={<Login setUser ={setUser}/>} />  
     <Route path="/signup" element ={<SignUp setUser ={setUser}/>} />  
     <Route path="*" element ={<><h1>404 not Found</h1> <h3> Sorry Nothing here!! </h3></> }/> 
     </Routes>

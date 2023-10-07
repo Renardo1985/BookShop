@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useContext } from "react";
-import { Container, Row, Col, Button } from "react-bootstrap";
+import { Container, Row, Col, Button, Card } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 
 import AddressCard from "./AddressCard.js";
@@ -26,28 +26,6 @@ function UserProfile({ setUser }) {
 
   const address = user.address
 
-  if (!address)
-    return (
-      <div className="profile">
-        <Container fluid="md">
-          <Row>
-            <Col>
-              <h2>Profile</h2>
-            </Col>
-          </Row>
-          <Row>
-            <p>Welcome {user.full_name}.</p>
-            <p>Seems you do not have an address registered!.</p>
-            <Row>
-              <Col>
-                <Button href="/addaddress">Add Address</Button>
-              </Col>
-            </Row>
-          </Row>
-        </Container>
-      </div>
-    );
-
   return (
     <div className="profile">
       <Container>
@@ -64,12 +42,17 @@ function UserProfile({ setUser }) {
         ) : (
           <>
             <Row>
-            <p>Purchase History : work in progress...</p> 
-            <Col>
-              
+            <p>Purchase History : </p> 
+            <Row>
+                {user.books? user.books.map((item) => { return (<Col><Card> Title: {item.title} </Card></Col>)} ):null}
+
+            </Row>
+            </Row>
+
+            <Row>
+            <Col>              
               <strong>Address(s) on file:</strong>
-              </Col>
-            
+              </Col>            
               <Row>
                 <Col>
                   {address.map((item) => (
@@ -86,7 +69,8 @@ function UserProfile({ setUser }) {
             </Row>
           </>
         )}
-        <Button href="/addaddress">Add Other Address</Button>
+        <Row><p></p></Row>
+        <Row><Col><Button href="/addaddress">Add Address</Button></Col></Row>
       </Container>
    
     </div>
