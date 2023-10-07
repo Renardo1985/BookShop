@@ -190,16 +190,13 @@ class UserAddress_CR(Resource):
                 
 class UserAddress_UD(Resource):  
 
-
-
     def patch(self, id):
 
         if session.get('id'):
-            data = request.get_json()
-            id = data.get('id')
+            data = request.get_json()           
             
         user = User.query.get_or_404(session['id'])
-        id = data.get('id')
+        
         address = Address.query.filter_by(id = id, user_id = user.id).first()
 
         if address:
@@ -208,7 +205,7 @@ class UserAddress_UD(Resource):
             address.state = data.get('state', address.state) if data.get('state') != '' else address.state
             address.postal_code = data.get('postal_code', address.postal_code) if data.get('postal_code') != '' else address.postal_code
             address.country = data.get('country', address.country) if data.get('country') != '' else address.country
-            
+            db.session.commit()
             addresses = [address.to_dict() for address in user.address]
             if addresses:
                 return make_response((addresses), 200)

@@ -6,18 +6,25 @@ import AddressCard from "./AddressCard.js";
 import UpdateAddress from "./UpdateAddress.js";
 import { userData } from "./App";
 
-function UserProfile({ address, setAddress, setUser }) {
+function UserProfile({ setUser }) {
   const user = useContext(userData);
+
   const [edit, setEdit] = useState(false);
   const [item, setItem] = useState(null);
 
-  useEffect(() => {
-    fetch("/address").then((res) => {
-      if (res.ok) {
-        res.json().then((addy) => setAddress(addy));
-      }
+  useEffect(() => { 
+    fetch("/check_session")
+      .then((res) => {  
+        if (res.ok) {
+          res.json().then((user) => setUser(user));
+        }
+        else{
+          res.json().then((err) => console.log(err));          
+        }      
     });
-  }, [setAddress]);
+  }, [setUser]);
+
+  const address = user.address
 
   if (!address)
     return (
@@ -51,7 +58,7 @@ function UserProfile({ address, setAddress, setUser }) {
         {edit ? (
           <UpdateAddress
             address={item}
-            setAddress={setAddress}
+            setUser={setUser}
             setEdit={setEdit}
           />
         ) : (
@@ -69,7 +76,7 @@ function UserProfile({ address, setAddress, setUser }) {
                     <AddressCard
                       key={item.id}
                       address={item}
-                      setAddress={setAddress}
+                      setUser={setUser}
                       setEdit={setEdit}
                       setItem={setItem}
                     />

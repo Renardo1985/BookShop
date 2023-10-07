@@ -1,8 +1,12 @@
-import { Container, Row, Col, Card, Button } from 'react-bootstrap';
+import { Card, Button } from 'react-bootstrap';
+import React from "react";
 import { useNavigate } from "react-router-dom";
 
 
-const AddressCard = ({ address, setAddress , setEdit, setItem }) => {
+
+function AddressCard ({ address, setEdit, setItem ,setUser}) {  
+
+  const nav = useNavigate()
 
     const handle = () =>{ 
     let id = address.id
@@ -14,11 +18,23 @@ const AddressCard = ({ address, setAddress , setEdit, setItem }) => {
     },
     body: JSON.stringify({id}),
     }).then((r) => {
-    if (r.ok) {r.json().then((addy) => setAddress(addy));} 
+    if (r.ok) {} 
     else {
       r.json().then((err) => console.log(err));
     }
-  });}
+  });
+
+  fetch("/check_session")
+      .then((res) => {  
+        if (res.ok) {
+          res.json().then((user) => setUser(user));
+        }
+        else{nav('/');          
+        }      
+    });
+
+
+}
 
   const handleupdate = () =>{setEdit(true); setItem(address)}
 

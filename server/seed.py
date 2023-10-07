@@ -3,14 +3,14 @@
 from random import randint, choice as rc
 from faker import Faker
 from app import app
-from models import db, User, Book, Address, Cart_Items, cart_table
+from models import db, User, Book, Address, Cart_Items, user_book
 
 if __name__ == '__main__':
     fake = Faker()
     with app.app_context():
         
         print("Deleting all records...")
-        db.session.execute(cart_table.delete())
+        db.session.execute(user_book.delete())
         Book.query.delete()
         User.query.delete()
         Address.query.delete()
@@ -87,6 +87,11 @@ if __name__ == '__main__':
             
                      
         db.session.add_all(carts)
+        
+        
+        for i in range(5):             
+            rc(users).books.append(rc(books))
+            
         db.session.commit()
         
         print("All done seeding.")

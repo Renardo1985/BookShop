@@ -6,18 +6,16 @@ import re
 
 from config import db, bcrypt
 
-cart_table = db.Table(
-    'cart',
+user_book= db.Table(
+    'library_books',
     db.Column('user_id', db.ForeignKey('user.id')),
     db.Column('book_id', db.ForeignKey('book.id')),
-    db.Column('cart_item_id', db.ForeignKey('cart_item.id'))
-)
-   
+    db.Column('date_added', db.DateTime, server_default=db.func.now())    
+)  
 
 class User(db.Model, SerializerMixin):
     __tablename__ = 'user'
-    serialize_rules = ('-books', '-_password_hash',
-                       '-cart_items', '-books_in_cart',)
+    serialize_rules = ('-_password_hash',)
     id = db.Column(db.Integer, primary_key=True)
     _password_hash = db.Column(db.String)
     email = db.Column(db.String(100), unique=True, nullable=False)
@@ -25,7 +23,7 @@ class User(db.Model, SerializerMixin):
     is_admin = db.Column(db.Boolean(), default=False)
 
     cart_items = db.relationship('Cart_Items', backref='user')    
-    books = db.relationship('Book', secondary=cart_table, backref='users') 
+    books = db.relationship('Book', secondary=user_book, backref='users') 
     
     address = db.relationship('Address', backref='user')
 

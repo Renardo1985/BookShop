@@ -26,7 +26,6 @@ export default function App() {
       .then((res) => {  
         if (res.ok) {
           res.json().then((user) => setUser(user));
-
         }
         else{
           res.json().then((err) => console.log(err));          
@@ -77,7 +76,6 @@ export default function App() {
 
     <Route path="/user" element ={<UserProfile  address ={address} setAddress={setAddress} setUser={setUser}/>}/>
     <Route path="/addaddress" element ={<AddAddress setAddress={setAddress}/>}/> 
-    {/* <Route path="/updateaddress/:id" element ={<UpdateAddress setAddress={setAddress}/>}/>  */}
     <Route path="*" element ={<><h1>404 not Found</h1> <h3> Sorry Nothing here!! </h3></> }/> 
     </Routes>
     <Foot />

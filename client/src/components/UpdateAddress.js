@@ -5,7 +5,7 @@ import InputGroup from "react-bootstrap/InputGroup";
 import Button from "react-bootstrap/Button";
 import { Container, Row, Col } from "react-bootstrap";
 
-function UpdateAddress({address, setAddress, setEdit}) 
+function UpdateAddress({address, setUser, setEdit}) 
 {
     const [street, setStreet] = useState("");
     const [city, setCity] = useState("");
@@ -34,15 +34,22 @@ function UpdateAddress({address, setAddress, setEdit})
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ id, street, city, state, postal_code, country }),
+      body: JSON.stringify({ street, city, state, postal_code, country }),
     }).then((res) => {
       setIsLoading(false);
-      if (res.ok) {
-        res.json().then((address) => setAddress(address));
-        setEdit(false);
-      } else {
+      if (res.ok) {setEdit(false);}       
+      else {
         res.json().then((err) => console.log(err));
       }
+
+      fetch("/check_session")
+      .then((res) => {  
+        if (res.ok) {
+          res.json().then((user) => setUser(user));
+        }
+        else{nav('/');          
+        }      
+    });
     });
   }
 
