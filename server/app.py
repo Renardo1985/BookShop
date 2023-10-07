@@ -131,17 +131,25 @@ class UserCart_CUD(Resource):
     def patch(self, id):
 
         if session.get('id'):
+            
+            data = request.get_json()
+            quantity = data.get('quantity')            
+            print(data)
+            print (type(quantity))
+            
             user = User.query.get_or_404(session['id'])
+           
+            cart_item = Cart_Items.query.filter_by(id=id,user_id=user.id).first() 
+            
+                      
+            
 
-            book = Book.query.filter(Book.id == id).first()
-            cart_item = Cart_Items.query.filter_by(
-                user_id=user.id, book_id=book.id).first()
-
-            if cart_item:
-                data = request.get_json()
-                cart_item.quantity = data.get('quantity')
+            if cart_item and quantity:
+               
+                cart_item.quantity = quantity
                 db.session.commit()
-                return cart_item.to_dict(), 200
+                
+                return make_response(jsonify(user.to_dict()), 200)
 
 
 class UserAddress_CR(Resource):

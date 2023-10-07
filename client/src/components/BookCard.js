@@ -1,7 +1,7 @@
 import { Container, Row, Col, Card, Button } from 'react-bootstrap';
 
 
-const BookCard = ({ book, setCart }) => {
+const BookCard = ({ book, setUser }) => {
   const { author, title, isbn_13, price, id, publisher , description, category,image} = book;
 
 const handle = () =>{ 
@@ -10,12 +10,12 @@ const handle = () =>{
     method: "POST",
     headers: {
       "Content-Type": "application/json",    },    
-  }).then((res) => {
-    if (res.ok) { 
-      res.json().then( i => setCart(i))
-       } 
-   
-  })
+  }).then((res) => {if (res.ok) {  fetch("/check_session")
+  .then((res) => {  
+    if (res.ok) {
+      res.json().then((user) => setUser(user));
+    }
+});} }) 
 }
 
 return ( 

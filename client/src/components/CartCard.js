@@ -1,8 +1,10 @@
-import { Container, Row, Col, Card, Button } from 'react-bootstrap';
+import { Container, Row, Col, Card, Button, Form} from 'react-bootstrap';
+import React, { useState } from 'react';
 
 
-const CartCard = ({ item, setCart}) => {
-  const { book, quantity,id, added_date, book_id} = item;
+const CartCard = ({ item, setUser}) => {
+const { book, quantity,id, added_date, book_id} = item;
+const [qvalue, setQ] = useState(quantity)
 
 
 const handle = () =>{ 
@@ -10,23 +12,50 @@ const handle = () =>{
     method: "DELETE",
     headers: {
       "Content-Type": "application/json",    },    
-  }).then((r) => {
-    if (r.ok) { r.json().then((cart) => setCart(cart));   } 
-  })
+    }).then((res) => {if (res.ok) {  fetch("/check_session")
+    .then((res) => {  
+      if (res.ok) {
+        res.json().then((user) => setUser(user));
+      }
+  });} })
+}
+
+const QuantityChange = (id, quantity) => { 
+
+
+
+  fetch(`/cart/${id}`, {
+    method: "PATCH",
+    headers: {
+      "Content-Type": "application/json",
+    },body: JSON.stringify({quantity}),
+  }).then((res) => {
+    
+    if (res.ok) {}       
+    else {
+      res.json().then((err) => console.log(err));
+    }
+  });
+
+  
+  
+
+
+
 }
 
 return ( 
-        <Col key={id}>
-          <Card>
+        
+          <Card key={id}>
             <Card.Img variant="top" src={""} />
             <Card.Body>
               <Card.Title>{book['title']}</Card.Title>
-              <Card.Text>Qty: {quantity}</Card.Text>
+              <Form.Control type = 'number' value ={qvalue} onChange={(e) => QuantityChange(id, parseInt(e.target.value))} min ='1'/>
         
-              <Button onClick={handle}>Delete</Button>                
+              <button onClick={handle}>Delete</button>                
             </Card.Body>
           </Card>
-        </Col>
+        
   );
 };
 export default CartCard;

@@ -1,28 +1,34 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 
 import CartCard from "./CartCard";
 import { Container, Row, Col, Card, Button } from 'react-bootstrap';
+import { userData } from "./App";
 
 
-function Cart({cart,setCart}) {
+function Cart({setUser}) {
+
+  const user = useContext(userData);
   
-  useEffect(() => {
-    fetch('/cart').then(res => {
-      if (res.ok) {
-        res.json().then(items =>
-          setCart(items),
-        )
-      };
+  useEffect(() => { 
+    fetch("/check_session")
+      .then((res) => {  
+        if (res.ok) {
+          res.json().then((user) => setUser(user));
+        }
+        else{
+          res.json().then((err) => console.log(err));          
+        }      
     });
-  }, [setCart]);
+  }, [setUser]);
+
 
 
 return (
       <Container >
         <Row className="justify-content-md-center">
 
-        {cart.length === 0 ? <Row><h3>Your Cart is Empty</h3> <p>Add Books to your cart!</p> </Row>
-        : <Row> {cart.map((item) => (<CartCard key={item.id} item ={item} setCart = {setCart}/>)) } 
+        {user.cart_items.length === 0 ? <Row><h3>Your Cart is Empty</h3> <p>Add Books to your cart!</p> </Row>
+        : <Row> {user.cart_items.map((item) => (<CartCard key={item.id} item ={item} setUser= {setUser}/>)) } 
         
         <Row><p></p></Row>
         
