@@ -144,8 +144,22 @@ class UserCart_CUD(Resource):
                 return cart_item.to_dict(), 200
 
 
-class UserAddress_CRUD(Resource):
+class UserAddress_CR(Resource):
+    
+    def get(self):
 
+        if session.get('id'):
+            user = User.query.get_or_404(session['id'])
+            if user:
+                try:
+                    # ipdb.set_trace()
+                    addresses = [address.to_dict() for address in user.address]
+                    if addresses:
+                        return make_response((addresses), 200)
+
+                except AttributeError as e:
+                    return {'error': '422 Unprocessable Entity'}, 422
+                
     def post(self):
 
         if session.get('id'):
@@ -160,7 +174,7 @@ class UserAddress_CRUD(Resource):
                     postal_code=data.get('postal_code'),
                     country=data.get('country')
                 )
-            # checks if book is already an item in users cart.
+            # checks if user already has this address
             search = Address.query.filter_by(street = address.street, city = address.city, state = address.state).first()
                 
             if search:
@@ -173,43 +187,37 @@ class UserAddress_CRUD(Resource):
 
             return {'error': '422 Unprocessable Entity'}, 200
         return {'error': '422 Unprocessable Entity'}, 422
+                
+class UserAddress_UD(Resource):  
 
-    def get(self):
 
-        if session.get('id'):
-            user = User.query.get_or_404(session['id'])
-            if user:
-                try:
-                    # ipdb.set_trace()
-                    addresses = [address.to_dict() for address in user.address]
-                    if addresses:
-                        return make_response((addresses), 200)
 
-                except AttributeError as e:
-                    return {'error': '422 Unprocessable Entity'}, 422
-
-    def patch(self):
-
-        data = request.get_json()
-        user = User.query.get_or_404(session['id'])
-
-        if data and user.address:
-            user.address.street = data.get('street', user.address.street)
-            user.address.city = data.get('city', user.address.city)
-            user.address.state = data.get('state', user.address.state)
-            user.address.postal_code = data.get(
-                'postal_code', user.address.postal_code)
-            user.address.country = data.get('country', user.address.country)
-            db.session.commit()
-            return make_response(jsonify(user.address.to_dict()), 200)
-
-        return {'error': '422 Unprocessable Entity'}, 422
-
-    def delete(self):
+    def patch(self, id):
 
         if session.get('id'):
             data = request.get_json()
             id = data.get('id')
+            
+        user = User.query.get_or_404(session['id'])
+        id = data.get('id')
+        address = Address.query.filter_by(id = id, user_id = user.id).first()
+
+        if address:
+            address.street = data.get('street', address.street) if data.get('street') != '' else address.street
+            address.city = data.get('city', address.city) if data.get('city') != '' else address.city
+            address.state = data.get('state', address.state) if data.get('state') != '' else address.state
+            address.postal_code = data.get('postal_code', address.postal_code) if data.get('postal_code') != '' else address.postal_code
+            address.country = data.get('country', address.country) if data.get('country') != '' else address.country
+            
+            addresses = [address.to_dict() for address in user.address]
+            if addresses:
+                return make_response((addresses), 200)
+
+        return {'error': '422 Unprocessable Entity'}, 422
+
+    def delete(self, id):
+
+        if session.get('id'):            
             user = User.query.get_or_404(session['id'])
             address = Address.query.filter_by(id = id, user_id = user.id).first()
             db.session.delete(address)
@@ -226,7 +234,9 @@ api.add_resource(BooksIndex, '/books', endpoint='books')
 api.add_resource(BooksById, '/books/<int:id>', endpoint='books/id')
 api.add_resource(UserCart, '/cart', endpoint='/cart')
 api.add_resource(UserCart_CUD, '/cart/<int:id>', endpoint='cart/id')
-api.add_resource(UserAddress_CRUD, '/address', endpoint='address')
+api.add_resource(UserAddress_CR, '/address', endpoint='address')
+api.add_resource(UserAddress_UD, '/address/<int:id>', endpoint='address/id')
+
 
 
 # catches errors thrown from @validates and other exceptions

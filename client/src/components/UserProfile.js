@@ -1,26 +1,24 @@
-
-import React, { useEffect, useContext } from 'react';
-import { Container, Row, Col, Button} from "react-bootstrap";
+import React, { useEffect, useState, useContext } from "react";
+import { Container, Row, Col, Button } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 
 import AddressCard from "./AddressCard.js";
-import {userData} from './App';
+import UpdateAddress from "./UpdateAddress.js";
+import { userData } from "./App";
 
-function UserProfile({ address, setAddress, setUser}) {
+function UserProfile({ address, setAddress, setUser }) {
   const user = useContext(userData);
-  const nav = useNavigate();
+  const [edit, setEdit] = useState(false);
+  const [item, setItem] = useState(null);
 
   useEffect(() => {
-    fetch('/address').then(res => {
+    fetch("/address").then((res) => {
       if (res.ok) {
-        res.json().then(addy =>
-          setAddress(addy),
-        )
-      };
+        res.json().then((addy) => setAddress(addy));
+      }
     });
   }, [setAddress]);
 
- 
   if (!address)
     return (
       <div className="profile">
@@ -42,33 +40,48 @@ function UserProfile({ address, setAddress, setUser}) {
         </Container>
       </div>
     );
-    
+
   return (
     <div className="profile">
-      <Container fluid="md">
-        <Row>
-          <Col>
-            <h2>Profile</h2>
-          </Col>
-        </Row>
-        <Row>
+      <Container>
+        <Row>         
+          <h2>Profile</h2> 
           <p>Welcome {user.full_name}.</p>
         </Row>
-        <Row>
-          <p>Purchase History : work in progress...</p>
-        </Row>
-        <p>Address(s) on file:</p>
-        <Row>
-          <Col>
-          {address.map((item) => ( <AddressCard key = {item.id} address = {item} setAddress={setAddress}/> ))} 
-          </Col>
-          <Row>
+        {edit ? (
+          <UpdateAddress
+            address={item}
+            setAddress={setAddress}
+            setEdit={setEdit}
+          />
+        ) : (
+          <>
+            <Row>
+            <p>Purchase History : work in progress...</p> 
             <Col>
-          <Button href="/addaddress">Add Other Address</Button>
-          </Col>
-          </Row>
-        </Row>
+              
+              <strong>Address(s) on file:</strong>
+              </Col>
+            
+              <Row>
+                <Col>
+                  {address.map((item) => (
+                    <AddressCard
+                      key={item.id}
+                      address={item}
+                      setAddress={setAddress}
+                      setEdit={setEdit}
+                      setItem={setItem}
+                    />
+                  ))}
+                </Col>
+              </Row>
+            </Row>
+          </>
+        )}
+        <Button href="/addaddress">Add Other Address</Button>
       </Container>
+   
     </div>
   );
 }

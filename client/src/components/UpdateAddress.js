@@ -1,11 +1,12 @@
-import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useEffect, useState, } from "react";
+import { useParams, useNavigate } from "react-router-dom";
 import Form from "react-bootstrap/Form";
 import InputGroup from "react-bootstrap/InputGroup";
 import Button from "react-bootstrap/Button";
 import { Container, Row, Col } from "react-bootstrap";
 
-function UpdateAddress({address, setAddress}) {
+function UpdateAddress({address, setAddress, setEdit}) 
+{
     const [street, setStreet] = useState("");
     const [city, setCity] = useState("");
     const [state, setState] = useState("");
@@ -15,24 +16,30 @@ function UpdateAddress({address, setAddress}) {
     const [isLoading, setIsLoading] = useState(false);
   
     const nav = useNavigate();
+  
+
  
-if (address){   
+  function handleClick(e) {setEdit(false)} 
+ 
+
   function handleSubmit(e) {
     e.preventDefault();
     setErrors([]);
     setIsLoading(true);
+    const {id} = address
+    
 
-    fetch("/address", {
+    fetch(`/address/${id}`, {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ street, city, state, postal_code, country }),
+      body: JSON.stringify({ id, street, city, state, postal_code, country }),
     }).then((res) => {
       setIsLoading(false);
       if (res.ok) {
         res.json().then((address) => setAddress(address));
-        nav("/user");
+        setEdit(false);
       } else {
         res.json().then((err) => console.log(err));
       }
@@ -101,12 +108,13 @@ if (address){
                 />
               </InputGroup>
 
-              <InputGroup className="mb-3">
+              
                 <Button id="signup-button" type="submit">
                   {" "}
                   {isLoading ? "Loading..." : "Submit"}
                 </Button>
-              </InputGroup>
+                <Button onClick={handleClick}>Cancel</Button>
+              
               {errors ? (
                 <Form.Label>
                   {" "}
@@ -121,6 +129,6 @@ if (address){
       </Container>
     </div>
   );
-}}
+}
 
 export default UpdateAddress;

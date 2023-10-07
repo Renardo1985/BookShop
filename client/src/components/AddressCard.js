@@ -2,12 +2,12 @@ import { Container, Row, Col, Card, Button } from 'react-bootstrap';
 import { useNavigate } from "react-router-dom";
 
 
-const AddressCard = ({ address, setAddress }) => {
+const AddressCard = ({ address, setAddress , setEdit, setItem }) => {
 
     const handle = () =>{ 
     let id = address.id
     
-    fetch("/address", {
+    fetch(`/address/${id}`, {
     method: "DELETE",
     headers: {
       "Content-Type": "application/json",
@@ -20,6 +20,8 @@ const AddressCard = ({ address, setAddress }) => {
     }
   });}
 
+  const handleupdate = () =>{setEdit(true); setItem(address)}
+
 return ( 
     
         <Card>
@@ -27,7 +29,10 @@ return (
             <Card.Body>
             <Card.Title>{address.street}</Card.Title>
             <Card.Text>City: {address.city}</Card.Text>
-            <Button href="/updateaddress">Update</Button>{" "}
+            <Card.Text>State: {address.state}</Card.Text>
+            <Card.Text>Code: {address.postal_code}</Card.Text>
+            <Card.Text>Country: {address.country}</Card.Text>
+            <Button onClick={handleupdate}>Update</Button>{" "}
             <Button onClick={handle}>Delete</Button>               
         </Card.Body>
         </Card>  

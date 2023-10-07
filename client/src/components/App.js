@@ -10,7 +10,8 @@ import Cart from "./Cart";
 import AddAddress from "./AddAddress";
 import BookList from "./BooksList";
 import UserProfile from "./UserProfile";
-import UpdateAddress from "./UpdateAddress";
+// import UpdateAddress from "./UpdateAddress";
+
 
 const userData = createContext();
 
@@ -74,10 +75,9 @@ export default function App() {
     <Route path="/signup" element ={<SignUp setUser ={setUser}/>} />  
     <Route path="/cart" element ={<Cart cart={cart} setCart={setCart}/>} /> 
 
-    <Route path="/user" element ={<UserProfile address ={address} setAddress={setAddress} setUser={setUser}/>}/>
-    <Route path="/addaddress" element ={<AddAddress setAddress={setAddress}/>}/>
-    <Route path="/updateaddress" element ={<UpdateAddress address = {address} setAddress={setAddress}/>}/>
-
+    <Route path="/user" element ={<UserProfile  address ={address} setAddress={setAddress} setUser={setUser}/>}/>
+    <Route path="/addaddress" element ={<AddAddress setAddress={setAddress}/>}/> 
+    {/* <Route path="/updateaddress/:id" element ={<UpdateAddress setAddress={setAddress}/>}/>  */}
     <Route path="*" element ={<><h1>404 not Found</h1> <h3> Sorry Nothing here!! </h3></> }/> 
     </Routes>
     <Foot />
