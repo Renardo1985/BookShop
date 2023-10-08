@@ -56,7 +56,7 @@ function UserProfile({ setUser }) {
               ))}
 
               <Card.Header>
-                <Button variant={"success"} href="/addaddress">
+                <Button variant={"outline-success"} href="/addaddress">
                   Add Address
                 </Button>
               </Card.Header>

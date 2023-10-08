@@ -67,7 +67,7 @@ return (
                 </Row>
                 <Row><p></p></Row>
                 <Row>
-                  <Col><Card.Text><Button variant='secondary'onClick={handle}>Delete</Button></Card.Text> </Col>
+                  <Col><Card.Text><Button variant="outline-danger" onClick={handle}>Delete</Button></Card.Text> </Col>
                 </Row>
               </Col>
             </Row>}

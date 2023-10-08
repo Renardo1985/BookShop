@@ -47,8 +47,8 @@ return (
             <Card.Text>State: {address.state}</Card.Text>
             <Card.Text>Code: {address.postal_code}</Card.Text>
             <Card.Text>Country: {address.country}</Card.Text>
-            <Button variant={'secondary'} onClick={handleupdate}>Edit</Button>{" "}
-            <Button variant={'danger'} onClick={handle}>Delete</Button>               
+            <Button variant={'outline-secondary'} onClick={handleupdate}>Edit</Button>{" "}
+            <Button variant={'outline-danger'} onClick={handle}>Delete</Button>               
         </Card.Body>
         </Card>  
 

@@ -55,7 +55,7 @@ return (
         <Card.Title>You have {sum} books in your Cart! </Card.Title>         
         {user.cart_items.map((item) => (<CartCard key={item.id} item ={item} setUser= {setUser}/>)) } 
         <Row><p></p></Row>        
-        <Row><Col><Button variant="danger" onClick={checkOut}> Checkout </Button></Col> <Col><strong>Total Cost: ${cost.toFixed(2)}</strong></Col>  </Row>        
+        <Row><Col><Button variant="outline-warning" onClick={checkOut}> Checkout </Button></Col> <Col><strong>Total Cost: ${cost.toFixed(2)}</strong></Col>  </Row>        
         </Row>}   
        </Row>
     
