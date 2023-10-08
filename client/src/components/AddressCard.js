@@ -40,16 +40,15 @@ function AddressCard ({ address, setEdit, setItem ,setUser}) {
 
 return ( 
     
-        <Card>
-        <Card.Img variant="top" src={""} />
-            <Card.Body>
+        <Card style={{ width: '18rem' }} bg='dark' text='light' >
+            <Card.Body  >
             <Card.Title>{address.street}</Card.Title>
             <Card.Text>City: {address.city}</Card.Text>
             <Card.Text>State: {address.state}</Card.Text>
             <Card.Text>Code: {address.postal_code}</Card.Text>
             <Card.Text>Country: {address.country}</Card.Text>
-            <Button onClick={handleupdate}>Update</Button>{" "}
-            <Button onClick={handle}>Delete</Button>               
+            <Button variant={'secondary'} onClick={handleupdate}>Edit</Button>{" "}
+            <Button variant={'danger'} onClick={handle}>Delete</Button>               
         </Card.Body>
         </Card>  
 

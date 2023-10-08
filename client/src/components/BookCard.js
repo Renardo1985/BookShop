@@ -29,14 +29,8 @@ return (
             <Card.Text>Author: {author}</Card.Text>
             <Card.Text>Publisher: {publisher}</Card.Text>
             <Card.Text>{description}</Card.Text>            
-            </Col>
-            
+            </Col>            
             </Row>
-            
-              
-             
-              
-              
               <Card.Text>ISBN: {isbn_13}</Card.Text>
               <Card.Text>Price: ${price}</Card.Text>
               <Button onClick={handle}>Add to Cart</Button>                

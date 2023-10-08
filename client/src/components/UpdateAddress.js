@@ -113,14 +113,12 @@ function UpdateAddress({address, setUser, setEdit})
                   value={postal_code}
                   onChange={(e) => setPostal(e.target.value)}
                 />
-              </InputGroup>
-
-              
-                <Button id="signup-button" type="submit">
+              </InputGroup><Row><Col md='2'><Button variant="success" id="signup-button" type="submit">
                   {" "}
                   {isLoading ? "Loading..." : "Submit"}
-                </Button>
-                <Button onClick={handleClick}>Cancel</Button>
+                </Button></Col>
+                <Col><Button variant="secondary" onClick={handleClick}>Cancel</Button></Col></Row>              
+               
               
               {errors ? (
                 <Form.Label>

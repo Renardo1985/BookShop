@@ -4,6 +4,8 @@ import BookCarousel from "./BookCarousel";
 
 function Home({books}) {
 
+  const booklist = [...books]
+
 
   const getRandomBooks = (arr) => {
     const shuffled = arr.sort(() => 0.5 - Math.random());
@@ -11,7 +13,7 @@ function Home({books}) {
 
   };
 
-  const bks = getRandomBooks(books)
+  const bks = getRandomBooks(booklist)
 
   
 

@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useContext } from "react";
-import { Container, Row, Col, Button, Card } from "react-bootstrap";
+import { Container, Row, Col, Button, Card, ListGroup } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 
 import AddressCard from "./AddressCard.js";
@@ -12,68 +12,59 @@ function UserProfile({ setUser }) {
   const [edit, setEdit] = useState(false);
   const [item, setItem] = useState(null);
 
-  useEffect(() => { 
-    fetch("/check_session")
-      .then((res) => {  
-        if (res.ok) {
-          res.json().then((user) => setUser(user));
-        }
-        else{
-          res.json().then((err) => console.log(err));          
-        }      
+  useEffect(() => {
+    fetch("/check_session").then((res) => {
+      if (res.ok) {
+        res.json().then((user) => setUser(user));
+      } else {
+        res.json().then((err) => console.log(err));
+      }
     });
   }, [setUser]);
 
-  const address = user.address
+  const address = user.address;
 
   return (
-    <div className="profile">
-      <Container>
-        <Row>         
-          <h2>Profile</h2> 
-          <p>Welcome {user.full_name}.</p>
-        </Row>
-        {edit ? (
-          <UpdateAddress
-            address={item}
-            setUser={setUser}
-            setEdit={setEdit}
-          />
-        ) : (
-          <>
-            <Row>
-            <p>Purchase History : </p> 
-            <Row>
-                {user.books? user.books.map((item) => { return (<Col><Card> Title: {item.title} </Card></Col>)} ):null}
+    <>
+      <Card bg="dark" text="light">
+        <Card.Body>
+          <Card.Header>{user.full_name} </Card.Header>
+          <Card.Title>Profile</Card.Title>
+          {edit ? (
+            <UpdateAddress address={item} setUser={setUser} setEdit={setEdit} />
+          ) : (
+            <div>
+              <Card.Text>Purchase History : </Card.Text>
+              <ListGroup variant="flush">
+                {user.books
+                  ? user.books.map((item) => {
+                      return (
+                        <ListGroup.Item> Book: {item.title} </ListGroup.Item>
+                      );
+                    })
+                  : null}
+              </ListGroup>
+              <Card.Header>Address(s) on file:</Card.Header>
+              {address.map((item) => (
+                <AddressCard
+                  key={item.id}
+                  address={item}
+                  setUser={setUser}
+                  setEdit={setEdit}
+                  setItem={setItem}
+                />
+              ))}
 
-            </Row>
-            </Row>
-
-            <Row>
-            <Col>              
-              <strong>Address(s) on file:</strong>
-              </Col>            
-              <Row>
-                <Col>
-                  {address.map((item) => (
-                    <AddressCard
-                      key={item.id}
-                      address={item}
-                      setUser={setUser}
-                      setEdit={setEdit}
-                      setItem={setItem}
-                    />
-                  ))}
-                </Col>
-              </Row>
-            </Row>
-          </>
-        )}
-        <Row><p></p></Row>
-        <Row><Col><Button href="/addaddress">Add Address</Button></Col></Row>
-      </Container>
-   
-    </div>
+              <Card.Header>
+                <Button variant={"success"} href="/addaddress">
+                  Add Address
+                </Button>
+              </Card.Header>
+            </div>
+          )}
+        </Card.Body>
+      </Card>
+    </>
   );
 }
 
