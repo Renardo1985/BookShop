@@ -4,7 +4,17 @@
 Bookstore web application that provides users with the ability to browse books, add books to cart, and purchase books. 
 
 ### Entity Relationship Diagram
-![ER Diagram](https://github.com/Renardo1985/Phase-5-Project/blob/176f4b8bd8b42f16f46da6aff5d963412d797b44/media/ER%20Diagram.png)
+![ER Diagram](/media/ER Diagram.png)
+
+## Screenshots
+
+![Login/Signup](/media/Screenshot 2023-10-08 124327.png)
+![Books](/media/Screenshot 2023-10-08 142557.png)
+![Cart](/media/Screenshot 2023-10-08 124138.png)
+![Profile](/media/Screenshot 2023-10-08 124258.png)
+![Home](/media/Screenshot 2023-10-08 142541.png)
+
+
 
 ## Technologies
 <ul>
@@ -30,14 +40,15 @@ git@github.com:Renardo1985/Phase-5-Project.git
 ### `pipenv shell` run from server directory
 ### `python3 seed.py` run from server directory in the virtual environment
 **NOTE:** running seed.py will populate the books table in the database and deletes all other data.
-
-### finally `python3 app.py` server directory in the virtual environment
+### then `python3 app.py` server directory in the virtual environment
 
 ### Frontend setup
 ### `npm install --prefix client` from directory
-### `npm start --prefix client` from directory
+### `npm start --prefix client` from directory this should auto open the app in your browser
 
 **NOTE:** Use separate terminals!!
+
+
 
 USER STORY
 
