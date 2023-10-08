@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useContext } from "react";
-import { Button, Card, ListGroup } from "react-bootstrap";
+import { Button, Card, ListGroup, Row } from "react-bootstrap";
 
 
 import AddressCard from "./AddressCard.js";
@@ -45,7 +45,7 @@ function UserProfile({ setUser }) {
                   : null}
               </ListGroup>
               <Card.Header>Address(s) on file:</Card.Header>
-              {address.map((item) => (
+              <Row>{address.map((item) => (
                 <AddressCard
                   key={item.id}
                   address={item}
@@ -53,7 +53,7 @@ function UserProfile({ setUser }) {
                   setEdit={setEdit}
                   setItem={setItem}
                 />
-              ))}
+              ))}</Row>
 
               <Card.Header>
                 <Button variant={"outline-success"} href="/addaddress">
