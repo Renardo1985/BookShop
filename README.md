@@ -4,15 +4,15 @@
 Bookstore web application that provides users with the ability to browse books, add books to cart, and purchase books. 
 
 ### Entity Relationship Diagram
-![ER Diagram](/media/ER Diagram.png)
+![ER Diagram](./media/ER Diagram.png)
 
 ## Screenshots
 
-![Login/Signup](/media/Screenshot 2023-10-08 124327.png)
-![Books](/media/Screenshot 2023-10-08 142557.png)
-![Cart](/media/Screenshot 2023-10-08 124138.png)
-![Profile](/media/Screenshot 2023-10-08 124258.png)
-![Home](/media/Screenshot 2023-10-08 142541.png)
+![Login/Signup](./media/Screenshot 2023-10-08 124327.png)
+![Books](./media/Screenshot 2023-10-08 142557.png)
+![Cart](./media/Screenshot 2023-10-08 124138.png)
+![Profile](.media/Screenshot 2023-10-08 124258.png)
+![Home](./media/Screenshot 2023-10-08 142541.png)
 
 
 
