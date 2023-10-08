@@ -1,4 +1,4 @@
-import { Container, Row, Col, Card, Button, Form, Spinner} from 'react-bootstrap';
+import { Row, Col, Card, Button, Form, Spinner} from 'react-bootstrap';
 import React, { useState } from 'react';
 import moment from 'moment';
 
@@ -49,19 +49,29 @@ const QuantityChange = (id, quantity) => {
 
 return ( 
         
-          <Card key={item.id}>
-            {loading? <><Spinner animation="border" variant="primary" /></>:<><Card.Img variant="top" src={""} />
-            <Card.Body>
-              <Row md='7'>
-              <Col ><Card.Title>{item.book['title']}</Card.Title></Col>
-              <Col ><Card.Text>Added: {fdate}</Card.Text></Col>
-              </Row>
-              <Row>
-              <Col><Form.Control type = 'number' value ={qvalue} onChange={(e) => QuantityChange(item.id, parseInt(e.target.value))} min ='1'/>
-              <Card.Title>Item: ${item.book['price']}</Card.Title></Col></Row>
-              <Button variant='secondary'onClick={handle}>Delete</Button>                
-            </Card.Body></>}
+          <Card key={item.id} border="light" bg='dark' text='light' >
+             <Card.Body>
+            {loading? <><Spinner animation="border" variant="primary" /></>:
             
+            <Row>              
+              <Col xs='1'><Card.Img src={item.book['image']}/></Col>
+              <Col>
+                <Row>
+                  <Col xs='9'><Card.Title>{item.book['title']}</Card.Title></Col>
+                  <Col ><Card.Text>Added: {fdate}</Card.Text></Col>
+                </Row>
+                <Row>
+                  <Col xs='1'><Form.Control  type = 'number' value ={qvalue} onChange={(e) => QuantityChange(item.id, parseInt(e.target.value))} min ='1'/></Col>
+                  <Col xs='8'></Col>
+                  <Col ><Card.Text><strong>Item: ${item.book['price']}</strong></Card.Text></Col>
+                </Row>
+                <Row><p></p></Row>
+                <Row>
+                  <Col><Card.Text><Button variant='secondary'onClick={handle}>Delete</Button></Card.Text> </Col>
+                </Row>
+              </Col>
+            </Row>}
+            </Card.Body>
           </Card>
         
   );

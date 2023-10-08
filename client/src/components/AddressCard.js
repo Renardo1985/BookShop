@@ -40,7 +40,7 @@ function AddressCard ({ address, setEdit, setItem ,setUser}) {
 
 return ( 
     
-        <Card style={{ width: '18rem' }} bg='dark' text='light' >
+        <Card style={{ width: '18rem' }} bg='dark' text='light' border='light' >
             <Card.Body  >
             <Card.Title>{address.street}</Card.Title>
             <Card.Text>City: {address.city}</Card.Text>

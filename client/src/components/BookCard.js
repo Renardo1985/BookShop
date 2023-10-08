@@ -1,4 +1,4 @@
-import { Container, Row, Col, Card, Button } from 'react-bootstrap';
+import { Row, Col, Card, Button } from 'react-bootstrap';
 
 
 const BookCard = ({ book, setUser }) => {
@@ -20,7 +20,7 @@ const handle = () =>{
 
 return ( 
         
-          <Card key={id} >
+          <Card key={id} bg='dark' text='light' border='light' >
             
             <Card.Body>
             <Row>

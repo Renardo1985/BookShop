@@ -47,12 +47,12 @@ function Cart({setUser}) {
     for (const object of user.cart_items){cost+= (object.quantity*object.book['price'])}  
   } 
 return (
-      <Container >
+      <Card bg='dark' text='light' border="light">
+        <Card.Body>
         <Row className="justify-content-md-center">
         {user.cart_items.length === 0 ? <Row><h3>Your Cart is Empty</h3> <p>Add Books to your cart!</p> </Row>
         :<Row> 
-          <strong>You have {sum} books in your Cart! </strong>
-         
+        <Card.Title>You have {sum} books in your Cart! </Card.Title>         
         {user.cart_items.map((item) => (<CartCard key={item.id} item ={item} setUser= {setUser}/>)) } 
         <Row><p></p></Row>        
         <Row><Col><Button variant="danger" onClick={checkOut}> Checkout </Button></Col> <Col><strong>Total Cost: ${cost.toFixed(2)}</strong></Col>  </Row>        
@@ -67,8 +67,8 @@ return (
              Check Profile page to view transaction history!
             </Modal.Body>
           </Modal>
-    
-      </Container>
+      </Card.Body>
+      </Card>
     );
   };
   

@@ -46,6 +46,8 @@ let sum = null
   if (user.cart_items){
     for (const object of user.cart_items){sum+= object.quantity}
   } 
+  let nameAr = user.full_name.split(' ');
+  let fname = nameAr[0];
 
   return (
     <div className="navbar-container">
@@ -67,7 +69,7 @@ let sum = null
         <Navbar.Collapse className="justify-content-end">
         <Nav>
         <NavLink className="nav-link" to="/user">
-            {user.full_name}
+            {fname}'s Profile
           </NavLink>
           <NavLink className="nav-link" onClick={logout} >
             Logout

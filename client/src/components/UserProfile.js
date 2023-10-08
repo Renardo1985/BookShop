@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useContext } from "react";
-import { Container, Row, Col, Button, Card, ListGroup } from "react-bootstrap";
-import { useNavigate } from "react-router-dom";
+import { Button, Card, ListGroup } from "react-bootstrap";
+
 
 import AddressCard from "./AddressCard.js";
 import UpdateAddress from "./UpdateAddress.js";
@@ -26,7 +26,7 @@ function UserProfile({ setUser }) {
 
   return (
     <>
-      <Card bg="dark" text="light">
+      <Card bg="dark" text="light" border="light">
         <Card.Body>
           <Card.Header>{user.full_name} </Card.Header>
           <Card.Title>Profile</Card.Title>
@@ -35,7 +35,7 @@ function UserProfile({ setUser }) {
           ) : (
             <div>
               <Card.Text>Purchase History : </Card.Text>
-              <ListGroup variant="flush">
+              <ListGroup variant="flush" >
                 {user.books
                   ? user.books.map((item) => {
                       return (
