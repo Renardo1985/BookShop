@@ -44,24 +44,22 @@ export default function App() {
 
   if(user)
   {
-  return (
-    <div className="App">
-    <userData.Provider value={user}>
+  return (    
+    <userData.Provider value={user}>  
     <NavBar setUser ={setUser} />
     <Routes> 
-    <Route path="/" element ={<Home/>}/>    
+    <Route path="/" element ={<Home books={books}/>}/>    
     <Route path="/books" element ={<BookList books = {books} setUser={setUser}/>} /> 
     <Route path="/login" element ={<Login setUser ={setUser}/>} />  
     <Route path="/signup" element ={<SignUp setUser ={setUser}/>} />  
     <Route path="/cart" element ={<Cart setUser={setUser}/>} /> 
-
     <Route path="/user" element ={<UserProfile setUser={setUser}/>}/>
     <Route path="/addaddress" element ={<AddAddress/>}/> 
     <Route path="*" element ={<><h1>404 not Found</h1> <h3> Sorry Nothing here!! </h3></> }/> 
-    </Routes>
-    <Foot />
+    </Routes>   
+    <Foot/>
     </userData.Provider>
-  </div>
+    
   );
 }
 else
@@ -70,7 +68,7 @@ else
     <main>
     <NavBar setUser ={setUser} user={user} />
     <Routes> 
-    <Route path="/" element ={<Home/>}/>    
+    <Route path="/" element ={<Home books={books}/>}/>    
     <Route path="/login" element ={<Login setUser ={setUser}/>} />  
     <Route path="/signup" element ={<SignUp setUser ={setUser}/>} />  
     <Route path="*" element ={<><h1>404 not Found</h1> <h3> Sorry Nothing here!! </h3></> }/> 

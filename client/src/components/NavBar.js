@@ -21,7 +21,8 @@ let sum = null
 
   if (!user) {
   return ( 
-  <Navbar  data-bs-theme="dark">
+    <div className="navbar-container">
+  <Navbar  className="navbar navbar-expand-lg navbar-dark">
   <Container fluid>
     <Nav>
       <NavLink className="nav-link" exact= 'true' to="/">
@@ -37,6 +38,7 @@ let sum = null
     </Navbar.Collapse>
   </Container>
   </Navbar>
+  </div>
    
   );  }
 
@@ -46,10 +48,11 @@ let sum = null
   } 
 
   return (
-    <Navbar  data-bs-theme="dark">
+    <div className="navbar-container">
+    <Navbar  className="navbar navbar-expand-lg navbar-dark">
       <Container fluid>
         <Nav>
-          <NavLink className="nav-link" exact to="/">
+          <NavLink expand ='lg' className="nav-link" exact to="/">
             Home
           </NavLink>
 
@@ -73,6 +76,8 @@ let sum = null
         </Navbar.Collapse>
       </Container>
       </Navbar>
+      </div>
+  
     
   );
 }

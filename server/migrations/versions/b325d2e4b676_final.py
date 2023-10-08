@@ -1,8 +1,8 @@
 """final
 
-Revision ID: cab22d1c62aa
+Revision ID: b325d2e4b676
 Revises: 
-Create Date: 2023-10-07 11:34:43.140312
+Create Date: 2023-10-07 16:48:00.134527
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = 'cab22d1c62aa'
+revision = 'b325d2e4b676'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -54,7 +54,7 @@ def upgrade():
     op.create_table('cart_item',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('quantity', sa.Integer(), nullable=True),
-    sa.Column('added_date', sa.DateTime(), server_default=sa.text('(CURRENT_TIMESTAMP)'), nullable=True),
+    sa.Column('added_date', sa.DateTime(), nullable=True),
     sa.Column('user_id', sa.Integer(), nullable=True),
     sa.Column('book_id', sa.Integer(), nullable=True),
     sa.ForeignKeyConstraint(['book_id'], ['book.id'], name=op.f('fk_cart_item_book_id_book')),
@@ -64,7 +64,7 @@ def upgrade():
     op.create_table('library_books',
     sa.Column('user_id', sa.Integer(), nullable=True),
     sa.Column('book_id', sa.Integer(), nullable=True),
-    sa.Column('date_added', sa.DateTime(), server_default=sa.text('(CURRENT_TIMESTAMP)'), nullable=True),
+    sa.Column('date_added', sa.DateTime(), nullable=True),
     sa.ForeignKeyConstraint(['book_id'], ['book.id'], name=op.f('fk_library_books_book_id_book')),
     sa.ForeignKeyConstraint(['user_id'], ['user.id'], name=op.f('fk_library_books_user_id_user'))
     )

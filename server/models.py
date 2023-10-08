@@ -1,6 +1,7 @@
 from sqlalchemy_serializer import SerializerMixin
 from sqlalchemy.ext.hybrid import hybrid_property
 from sqlalchemy.orm import validates
+from datetime import datetime
 import re
 
 
@@ -10,7 +11,7 @@ user_book= db.Table(
     'library_books',
     db.Column('user_id', db.ForeignKey('user.id')),
     db.Column('book_id', db.ForeignKey('book.id')),
-    db.Column('date_added', db.DateTime, server_default=db.func.now())    
+    db.Column('date_added', db.DateTime, default=datetime.utcnow) 
 )  
 
 class User(db.Model, SerializerMixin):
@@ -106,7 +107,7 @@ class Cart_Items(db.Model, SerializerMixin):
     serialize_rules = ('-user',)
     id = db.Column(db.Integer, primary_key=True)
     quantity = db.Column(db.Integer, default=1)  # Default to 1 book
-    added_date = db.Column(db.DateTime, server_default=db.func.now())
+    added_date = db.Column(db.DateTime, default=datetime.utcnow)
 
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     book_id = db.Column(db.Integer, db.ForeignKey('book.id'))

@@ -4,6 +4,8 @@
   --link: #61dafb;
   --text: hsla(0, 0%, 100%, 0.88);
 }
+
+
 .foot-icon {
   width: 20px;
   height: 20px;
@@ -11,8 +13,11 @@
 }
 
 body{
-  color: white;
+  color: white; 
   background-color: black;
+
+ 
+  
 }
 
 .mt-5{
@@ -23,3 +28,26 @@ body{
 .navbar {
   font-size: larger;
 }
+
+.book {
+  text-align: center;
+  padding: 20px;
+}
+
+.book img {
+  max-width: 100%;
+  max-height: 200px;
+}
+
+.navbar-container {
+  width: 100%;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  background-color: black;
+}
+
+.my-modal {
+  color: black;
+}
+

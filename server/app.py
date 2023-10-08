@@ -37,6 +37,24 @@ def check_session():
         return make_response(jsonify(user.to_dict()), 200)
     return {'error': 'No User logged in'}, 404
 
+@app.route("/check_out", methods=["GET"])
+def check_out():
+    if session.get('id'):
+        user = User.query.filter(User.id == session['id']).first()     
+        if user.cart_items:
+            for item in user.cart_items: 
+                if item.book not in user.books:                
+                    user.books.append(item.book)
+            
+            for item in user.cart_items:
+                 db.session.delete(item)
+                
+            db.session.commit()
+            return make_response(jsonify(user.to_dict()), 200)
+    return {'error': 'No User logged in'}, 404
+
+
+
 
 class Signup(Resource):
     def post(self):
@@ -130,26 +148,20 @@ class UserCart_CUD(Resource):
 
     def patch(self, id):
 
-        if session.get('id'):
-            
+        if session.get('id'):            
             data = request.get_json()
             quantity = data.get('quantity')            
             print(data)
-            print (type(quantity))
-            
-            user = User.query.get_or_404(session['id'])
-           
+            print (type(quantity))            
+            user = User.query.get_or_404(session['id'])           
             cart_item = Cart_Items.query.filter_by(id=id,user_id=user.id).first() 
-            
-                      
-            
 
             if cart_item and quantity:
-               
                 cart_item.quantity = quantity
-                db.session.commit()
-                
-                return make_response(jsonify(user.to_dict()), 200)
+                db.session.commit() 
+                cart = [item.to_dict() for item in user.cart_items]
+                return make_response(jsonify(cart), 200)               
+             
 
 
 class UserAddress_CR(Resource):
@@ -241,6 +253,8 @@ api.add_resource(UserCart, '/cart', endpoint='/cart')
 api.add_resource(UserCart_CUD, '/cart/<int:id>', endpoint='cart/id')
 api.add_resource(UserAddress_CR, '/address', endpoint='address')
 api.add_resource(UserAddress_UD, '/address/<int:id>', endpoint='address/id')
+
+
 
 
 
