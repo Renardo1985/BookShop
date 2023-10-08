@@ -8,7 +8,7 @@
       "publisher": "Picador",
       "description": "From Alan Glynn, the award-winning author of Limitless, comes a novel of a twenty-first-century identity crisis that will thrill you from page one. Danny Lynch didn’t sign up for this, but right now, it’s all he’s got. Three weeks ago, he was working at a chow hall in Afghanistan and—more or less—doing fine. Sure, this meant living in a war zone, but he was never in the line of fire and, frankly, the money was hard to resist. Then Danny saw something he shouldn’t have, and now he’s back in New York City, haunted by what sent him home and lucky to be employed at all, even if that means dicing carrots for ten hours a day in a stuffy Midtown restaurant. The job’s one saving grace? A sight line from his prep station in the kitchen to a coveted corner table in the main room. For Danny, this is a window into the lives of some of Barcadero’s flashy clientele—and one evening, he sees a man who looks exactly like him. Teddy Trager is the visionary founder of the billion-dollar investment firm Paradime Capital. He has everything Danny never knew he wanted—cashmere suits, a sleek sports car . . . privilege, power—and the closer Danny looks at Trager the more fixated he becomes.",
       "category": "Fiction",
-      "image": "http://books.google.com/books/content?id=8NVfCgAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api"
+      "image": "https://mpd-biblio-covers.imgix.net/9781250061836.jpg?w=600"
     },
     {
       "title": "The Rough Guide to the Da Vinci Code",
@@ -18,7 +18,7 @@
       "description": "Explores and explains the context of Dan Brown's thriller \"The Da Vinci Code\", from how the early Christian Church 'edited' \"The Bible\" to the true history of the holy grail, and to what art historians make of Leonardo Da Vinci's symbolism in the \"Last Supper\" and other works.",
       "isbn_13": "9781843537137",
       "category": "Apocryphal Gospels",
-      "image": "http://books.google.com/books/content?id=k2jDX5h-c1IC&printsec=frontcover&img=1&zoom=1&source=gbs_api"
+      "image": "https://pictures.abebooks.com/isbn/9781843537137-us.jpg"
     },
     {
       "isbn_13": "9781593279509",
@@ -29,7 +29,7 @@
       "publisher": "No Starch Press",
       "description": "JavaScript lies at the heart of almost every modern web application, from social apps like Twitter to browser-based game frameworks like Phaser and Babylon. Though simple for beginners to pick up and play with, JavaScript is a flexible, complex language that you can use to build full-scale applications.",
       "category": "Computers",
-      "image": "http://books.google.com/books/content?id=p1v6DwAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api"
+      "image": "https://pictures.abebooks.com/isbn/9781593279509-us.jpg"
     },
     {
       "isbn_13": "9781491943533",
@@ -40,7 +40,7 @@
       "publisher": "O'Reilly Media",
       "description": "To get the most out of modern JavaScript, you need learn the latest features of its parent specification, ECMAScript 6 (ES6). This book provides a highly practical look at ES6, without getting lost in the specification or its implementation details.",
       "category": "Computers",
-      "image": "http://books.google.com/books/content?id=A44pDwAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api"
+      "image": "https://pictures.abebooks.com/isbn/9781491943533-us.jpg"
     },
     {
       "isbn_13": "9781593277574",
@@ -51,7 +51,7 @@
       "publisher": "No Starch Press",
       "description": "ECMAScript 6 represents the biggest update to the core of JavaScript in the history of the language. In Understanding ECMAScript 6, expert developer Nicholas C. Zakas provides a complete guide to the object types, syntax, and other exciting changes that ECMAScript 6 brings to JavaScript.",
       "category": "Computers",
-      "image": "http://books.google.com/books/content?id=6Ze7DQAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api"
+      "image": "https://pictures.abebooks.com/isbn/9781593277574-us.jpg"
     },
     {
       "isbn_13": "9781449365035",
@@ -62,7 +62,7 @@
       "publisher": "O'Reilly Media",
       "description": "Like it or not, JavaScript is everywhere these days -from browser to server to mobile- and now you, too, need to learn the language or dive deeper than you have. This concise book guides you into and through JavaScript, written by a veteran programmer who once found himself in the same position.",
       "category": "Computers",
-      "image": "http://books.google.com/books/content?id=tBbsAgAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api"
+      "image": "https://pictures.abebooks.com/isbn/9781449365035-us.jpg"
     },
     {
       "isbn_13": "9781449331818",
@@ -73,18 +73,18 @@
       "publisher": "O'Reilly Media",
       "description": "With Learning JavaScript Design Patterns, you'll learn how to write beautiful, structured, and maintainable JavaScript by applying classical and modern design patterns to the language. If you want to keep your code efficient, more manageable, and up-to-date with the latest best practices, this book is for you.",
       "category": "Computers",
-      "image": "http://books.google.com/books/content?id=L46fX62D5qYC&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api"
+      "image": "https://pictures.abebooks.com/isbn/9781449331818-us.jpg"
     },
     {
       "isbn_13": "9781484200766",
       "title": "Pro Git",
-      "subtitle": "Everything you neeed to know about Git",
+      "subtitle": "Everything you need to know about Git",
       "author": "Scott Chacon and Ben Straub",
       "published": "2014-11-18",
       "publisher": "Apress; 2nd edition",
       "description": "Pro Git (Second Edition) is your fully-updated guide to Git and its usage in the modern world. Git has come a long way since it was first developed by Linus Torvalds for Linux kernel development. It has taken the open source world by storm since its inception in 2005, and this book teaches you how to use it like a pro.",
       "category": "Computers",
-      "image": "http://books.google.com/books/content?id=jVYnCgAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api"
+      "image": "https://learning.oreilly.com/library/cover/9781484200766/250w/"
     },
     {
       "isbn_13": "9781484242216",
@@ -95,6 +95,6 @@
       "publisher": "Apress",
       "description": "Get the most out of this foundational reference and improve the productivity of your software teams. This open access book collects the wisdom of the 2017 \"Dagstuhl\" seminar on productivity in software engineering, a meeting of community leaders, who came together with the goal of rethinking traditional definitions and measures of productivity.",
       "category": "Computers",
-      "image": "http://books.google.com/books/content?id=qcSWDwAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api"
+      "image": "https://learning.oreilly.com/library/cover/9781484242216/250w/"
     }
 ]

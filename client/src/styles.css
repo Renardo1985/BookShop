@@ -31,13 +31,22 @@ body{
 
 .book {
   text-align: center;
-  padding: 20px;
+  padding: 30px;
+  height: 500px;
+  width: auto;
 }
 
-.book img {
+.cbook { 
   max-width: 100%;
-  max-height: 200px;
-}
+} 
+
+ .book img{
+  max-height: 100%;
+  max-width: 100%;
+
+ 
+
+} 
 
 .navbar-container {
   width: 100%;

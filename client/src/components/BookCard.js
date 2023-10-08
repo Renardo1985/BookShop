@@ -24,7 +24,7 @@ return (
             
             <Card.Body>
             <Row>
-            <Col md='3'><Card.Img  src={image} /></Col> 
+            <Col md='3'><Card.Img className='cbook'  src={image} /></Col> 
             <Col><Card.Title>{title} </Card.Title>
             <Card.Text>Author: {author}</Card.Text>
             <Card.Text>Publisher: {publisher}</Card.Text>

@@ -5,17 +5,7 @@ import BookCarousel from "./BookCarousel";
 function Home({books}) {
 
   const booklist = [...books]
-
-
-  const getRandomBooks = (arr) => {
-    const shuffled = arr.sort(() => 0.5 - Math.random());
-    return shuffled.slice(0, 5);
-
-  };
-
-  const bks = getRandomBooks(booklist)
-
-  
+  const bks = booklist.slice(0,3)  
 
 
   return (

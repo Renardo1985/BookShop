@@ -11,12 +11,11 @@ function BookCarousel({ books }) {
 if(books){
 
 	return(
-			<Carousel>
+			<Carousel >
 			  {books.map((book, index) => (
 				<Carousel.Item key={index}>
 				  <div className='book'>
 					<img src={book.image} alt={book.title}/>
-					<h3>{book.title}</h3>
 				  </div>
 				</Carousel.Item>
 			  ))}

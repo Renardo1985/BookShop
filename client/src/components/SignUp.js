@@ -106,7 +106,7 @@ return (
           <Button id='signup-button' type='submit'> {isLoading ? "Loading..." : "Sign Up"}</Button>        
         </InputGroup>
         <InputGroup className="mb-3">
-        <Form.Label> Already have an account? <a href="/">Login</a> </Form.Label> 
+        <Form.Label> Already have an account? <a href="/login">Login</a> </Form.Label> 
         </InputGroup>
         {error ? <Form.Label> {error.error}</Form.Label>:null}
           
