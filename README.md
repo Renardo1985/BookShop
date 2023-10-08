@@ -10,7 +10,7 @@ Bookstore web application that provides users with the ability to browse books, 
 
 ![Login/Signup](./media/Screenshot 2023-10-08 124327.png)
 ![Books](./media/Screenshot 2023-10-08 142557.png)
-![Cart](./media/Screenshot 2023-10-08 124138.png)
+![Cart](media/Screenshot 2023-10-08 124138.png)
 ![Profile](.media/Screenshot 2023-10-08 124258.png)
 ![Home](./media/Screenshot 2023-10-08 142541.png)
 
