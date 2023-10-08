@@ -72,6 +72,7 @@ class Book(db.Model, SerializerMixin):
     price = db.Column(db.Float)
     image = db.Column(db.String(100))
     publisher = db.Column(db.String(100))
+    published = db.Column(db.Date)
     description = db.Column(db.String)
     category = db.Column(db.String)
     

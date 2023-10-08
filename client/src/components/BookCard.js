@@ -19,20 +19,30 @@ const handle = () =>{
 }
 
 return ( 
-        <Col key={id}>
-          <Card>
-            <Card.Img variant="top" src={""} />
+        
+          <Card key={id} >
+            
             <Card.Body>
-              <Card.Title>{title}</Card.Title>
-              <Card.Text>{description}</Card.Text>
-              <Card.Text>Author: {author}</Card.Text>
-              <Card.Text>Publisher: {publisher}</Card.Text>
+            <Row>
+            <Col md='3'><Card.Img  src={image} /></Col> 
+            <Col><Card.Title>{title} </Card.Title>
+            <Card.Text>Author: {author}</Card.Text>
+            <Card.Text>Publisher: {publisher}</Card.Text>
+            <Card.Text>{description}</Card.Text>            
+            </Col>
+            
+            </Row>
+            
+              
+             
+              
+              
               <Card.Text>ISBN: {isbn_13}</Card.Text>
               <Card.Text>Price: ${price}</Card.Text>
               <Button onClick={handle}>Add to Cart</Button>                
             </Card.Body>
           </Card>
-        </Col>
+        
   );
 };
 export default BookCard;
