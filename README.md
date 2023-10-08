@@ -1,4 +1,5 @@
 # The BookShop
+![Home](https://github.com/Renardo1985/Phase-5-Project/blob/c76a4c47a2d25db72b186ce479e5526b9fd43a8b/media/Screenshot%202023-10-08%20142541.png)
 
 ## Description
 Bookstore web application that provides users with the ability to browse books, add books to cart, and purchase books. 
@@ -6,13 +7,8 @@ Bookstore web application that provides users with the ability to browse books, 
 ### Entity Relationship Diagram
 ![ER Diagram](https://github.com/Renardo1985/Phase-5-Project/blob/c76a4c47a2d25db72b186ce479e5526b9fd43a8b/media/ER%20Diagram.png)
 
-## Screenshots
 
-![Login/Signup](https://github.com/Renardo1985/Phase-5-Project/blob/c76a4c47a2d25db72b186ce479e5526b9fd43a8b/media/Screenshot%202023-10-08%20124327.png)
-![Books](https://github.com/Renardo1985/Phase-5-Project/blob/c76a4c47a2d25db72b186ce479e5526b9fd43a8b/media/Screenshot%202023-10-08%20142557.png)
-![Cart](https://github.com/Renardo1985/Phase-5-Project/blob/c76a4c47a2d25db72b186ce479e5526b9fd43a8b/media/Screenshot%202023-10-08%20124138.png)
-![Profile](https://github.com/Renardo1985/Phase-5-Project/blob/c76a4c47a2d25db72b186ce479e5526b9fd43a8b/media/Screenshot%202023-10-08%20124258.png)
-![Home](https://github.com/Renardo1985/Phase-5-Project/blob/c76a4c47a2d25db72b186ce479e5526b9fd43a8b/media/Screenshot%202023-10-08%20142541.png)
+
 
 
 
@@ -48,7 +44,12 @@ git@github.com:Renardo1985/Phase-5-Project.git
 
 **NOTE:** Use separate terminals!!
 
+## Screenshots
 
+![Login/Signup](https://github.com/Renardo1985/Phase-5-Project/blob/c76a4c47a2d25db72b186ce479e5526b9fd43a8b/media/Screenshot%202023-10-08%20124327.png)
+![Books](https://github.com/Renardo1985/Phase-5-Project/blob/c76a4c47a2d25db72b186ce479e5526b9fd43a8b/media/Screenshot%202023-10-08%20142557.png)
+![Cart](https://github.com/Renardo1985/Phase-5-Project/blob/c76a4c47a2d25db72b186ce479e5526b9fd43a8b/media/Screenshot%202023-10-08%20124138.png)
+![Profile](https://github.com/Renardo1985/Phase-5-Project/blob/c76a4c47a2d25db72b186ce479e5526b9fd43a8b/media/Screenshot%202023-10-08%20124258.png)
 
 USER STORY
 
