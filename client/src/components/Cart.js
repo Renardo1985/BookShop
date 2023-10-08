@@ -30,15 +30,15 @@ function Cart({setUser}) {
 
     setShowModal(true)
 
-    // fetch("/check_out")
-    //   .then((res) => {  
-    //     if (res.ok) {
-    //       res.json().then((user) => setUser(user), setShowModal(true));
-    //     }
-    //     else{
-    //       res.json().then((err) => console.log(err));          
-    //     }      
-    // });
+    fetch("/check_out")
+      .then((res) => {  
+        if (res.ok) {
+          res.json().then((user) => setUser(user), setShowModal(true));
+        }
+        else{
+          res.json().then((err) => console.log(err));          
+        }      
+    });
   }
 
   if (user.cart_items && user.cart_items.length >0)
