@@ -9,8 +9,8 @@ Bookstore web application that provides users with the ability to browse books, 
 
 
 
-
-
+### Video
+![Video Walkthrough](https://youtu.be/HraV4UslMTo)
 
 ## Technologies
 <ul>
