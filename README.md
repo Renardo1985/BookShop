@@ -4,15 +4,15 @@
 Bookstore web application that provides users with the ability to browse books, add books to cart, and purchase books. 
 
 ### Entity Relationship Diagram
-![ER Diagram](./media/ER Diagram.png)
+![ER Diagram](https://github.com/Renardo1985/Phase-5-Project/blob/c76a4c47a2d25db72b186ce479e5526b9fd43a8b/media/ER%20Diagram.png)
 
 ## Screenshots
 
-![Login/Signup](./media/Screenshot 2023-10-08 124327.png)
-![Books](./media/Screenshot 2023-10-08 142557.png)
-![Cart](media/Screenshot 2023-10-08 124138.png)
-![Profile](.media/Screenshot 2023-10-08 124258.png)
-![Home](./media/Screenshot 2023-10-08 142541.png)
+![Login/Signup](https://github.com/Renardo1985/Phase-5-Project/blob/c76a4c47a2d25db72b186ce479e5526b9fd43a8b/media/Screenshot%202023-10-08%20124327.png)
+![Books](https://github.com/Renardo1985/Phase-5-Project/blob/c76a4c47a2d25db72b186ce479e5526b9fd43a8b/media/Screenshot%202023-10-08%20142557.png)
+![Cart](https://github.com/Renardo1985/Phase-5-Project/blob/c76a4c47a2d25db72b186ce479e5526b9fd43a8b/media/Screenshot%202023-10-08%20124138.png)
+![Profile](https://github.com/Renardo1985/Phase-5-Project/blob/c76a4c47a2d25db72b186ce479e5526b9fd43a8b/media/Screenshot%202023-10-08%20124258.png)
+![Home](https://github.com/Renardo1985/Phase-5-Project/blob/c76a4c47a2d25db72b186ce479e5526b9fd43a8b/media/Screenshot%202023-10-08%20142541.png)
 
 
 
