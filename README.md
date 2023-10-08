@@ -4,7 +4,7 @@
 Bookstore web application that provides users with the ability to browse books, add books to cart, and purchase books. 
 
 ### Entity Relationship Diagram
-![ER Diagram](media/ER Diagram.png)
+![ER Diagram](https://github.com/Renardo1985/Phase-5-Project/blob/176f4b8bd8b42f16f46da6aff5d963412d797b44/media/ER%20Diagram.png)
 
 ## Technologies
 <ul>
